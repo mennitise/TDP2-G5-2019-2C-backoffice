@@ -1,0 +1,8 @@
+const actionTypes = {
+    APP_INITIALIZE: 'APP/INITIALIZE',
+    LOGIN_DATA_ENTERED: 'LOGIN/DATA_ENTERED',
+    LOGIN_SUCCESS: 'LOGIN/SUCCESS',
+    WINDOW_RESIZE: 'WINDOW/RESIZE'
+}
+
+export default actionTypes
