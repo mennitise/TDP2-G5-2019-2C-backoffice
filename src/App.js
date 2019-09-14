@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import generalActions from './redux/actions/generalActions'
+import { Route, Redirect, Switch } from 'react-router-dom'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import LoginContainer from './containers/login/container'
+
+import './App.css'
+
+class App extends Component {
+
+	constructor(props) {
+		super(props)
+		window.addEventListener('resize', ()=>this.props.dispatch(generalActions.windowResize(window.innerWidth, window.innerHeight)))
+		this.props.dispatch(generalActions.appInitialize(window.innerWidth, window.innerHeight/*, platform, window.top !== window.self*/))
+
+	}
+
+	render() {
+		return (
+			<div className='app'>
+				<Switch>
+					<Route path={'/login'} component={LoginContainer}/>
+					<Route path={'/init'} component={null} />
+					<Route path={'/dash'} component={null} />
+					<Redirect to="/login" />
+				</Switch>
+			</div>
+		)
+	}
 }
 
-export default App;
+function mapStateToProps(state) {
+	return state
+}
+
+export default connect(mapStateToProps, null)(App)
