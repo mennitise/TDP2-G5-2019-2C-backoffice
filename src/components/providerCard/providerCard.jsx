@@ -22,9 +22,14 @@ class ProviderCard extends PureComponent {
 							</p>
 							<p className='items-title'>Direcciones:</p>
 							{this.props.location.map((loc, idx) => {
+								let text = `${loc.address} - ${loc.zone}`
+								if (loc.phone) {
+									text += ' - Teléfono: ' + loc.phone
+								}
+
 								return(
 									<p key={`location-${idx}`} className='items'>
-										{`${loc.address} - Teléfono: ${loc.phone}`}
+										{text}
 									</p>
 								)
 							})}

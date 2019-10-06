@@ -23,23 +23,25 @@ class Providers extends PureComponent {
 								<h5 className='add-provider-text'>Agregar Prestador</h5>
 							</div>
 						</div>
-						{ this.props.listOfProviders &&
-							this.props.listOfProviders.map((provider, index) => {
-								return (
-									<ProviderCard
-										key={`provider-${index}`}
-										id={index}
-										name={provider.name}
-										specialities={provider.specialities}
-										type={provider.type}
-										languages={provider.languages}
-										plan={provider.plan}
-										location={provider.location}
-										email={provider.email}
-									/>
-								)
-							})
-						}
+						<div className='list-container'>
+							{ this.props.listOfProviders &&
+								this.props.listOfProviders.map((provider, index) => {
+									return (
+										<ProviderCard
+											key={`provider-${index}`}
+											id={index}
+											name={provider.name}
+											specialities={provider.specialities}
+											type={provider.type}
+											languages={provider.languages}
+											plan={provider.plan}
+											location={provider.location}
+											email={provider.email}
+										/>
+									)
+								})
+							}
+						</div>
 					</div>
 				</div>
 			</div>

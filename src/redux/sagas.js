@@ -68,7 +68,7 @@ export function* saveNewProvider(action) {
 			offices: action.providerData.addresses.map(office => {
 				return {
 					address: office.address,
-					zone_id: office.zone - 1,
+					zone_id: office.zone,
 					phone: office.phone,
 					lat: office.latitude,
 					lon: office.longitude,
