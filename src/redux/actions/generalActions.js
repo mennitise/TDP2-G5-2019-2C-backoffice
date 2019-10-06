@@ -15,6 +15,11 @@ const generalActions = {
             height,
         }
     },
+    providersRouteInitialize: function(){
+        return {
+            type: actionTypes.PROVIDERS_ROUTE_INITIALIZE,
+        }
+    },
 }
 
 export default generalActions

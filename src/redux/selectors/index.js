@@ -1,5 +1,7 @@
-import userNameSelector from './user'
+import userSelectors from './user'
+import providersSelectors from './providers'
 
 export {
-    userNameSelector,
+    userSelectors,
+    providersSelectors,
 }

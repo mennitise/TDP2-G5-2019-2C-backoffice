@@ -1,0 +1,26 @@
+.items {
+    padding-left: 10%;
+    margin-bottom: 0;
+}
+
+.items-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+.card-container {
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.card-buttons {
+    text-align: -webkit-right;
+}
+
+.card-buttons-size {
+    width: 30%;
+    display: flex;
+    justify-content: space-around;
+}
