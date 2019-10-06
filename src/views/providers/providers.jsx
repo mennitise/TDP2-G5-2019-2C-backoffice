@@ -12,8 +12,7 @@ class Providers extends PureComponent {
 	}
 
     render() {
-		console.log(this.props)
-        return(
+		return(
 			<div className='wrapper-providers'>
 				<div className='list'>
 					<div className='list-wrapper'>
@@ -26,7 +25,6 @@ class Providers extends PureComponent {
 						</div>
 						{ this.props.listOfProviders &&
 							this.props.listOfProviders.map((provider, index) => {
-								console.log(provider)
 								return (
 									<ProviderCard
 										key={`provider-${index}`}

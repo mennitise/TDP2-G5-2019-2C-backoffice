@@ -15,7 +15,6 @@ export function* login(action) {
 		const endpoint = 'https://gist.githubusercontent.com/brunokrebs/f1cacbacd53be83940e1e85860b6c65b/raw/to-do-items.json'
 		const response = yield call(fetch, endpoint)
         const data = yield response.json()
-        console.log(data)
 		yield put(loginActions.loginSuccess('36073333', 'Sebastian Menniti'))
 	} catch(error) {
 		console.log(error)
@@ -57,7 +56,32 @@ function* getProviders() {
 
 export function* saveNewProvider(action) {
 	try {
-		//const response = yield call(fetch, baseURL + '')
+		const languages = ['Español', 'Ingles']
+		const plans = ['A110', 'A210', 'A310']
+		const data = {
+			type: (action.providerData.type === '1') ? 'PROFESIONAL' : 'SANATORIO',
+			name: action.providerData.name,
+			languages: action.providerData.languages.map(idLang => languages[idLang - 1]),
+			specialties: action.providerData.specialities,
+			plan: plans[action.providerData.plan - 1],
+			emails: action.providerData.emails,
+			offices: action.providerData.addresses.map(office => {
+				return {
+					address: office.address,
+					zone_id: office.zone - 1,
+					phone: office.phone,
+					lat: office.latitude,
+					lon: office.longitude,
+				}
+			}),
+		}
+		const response = yield fetch(baseURL + 'lenders', {
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		})
 		yield put(providerActions.saveNewProviderSuccessful())
 	} catch (error) {
 		console.log(error)
@@ -68,6 +92,10 @@ export function* saveNewProvider(action) {
 
 function* redirectToAddNewProvider(action) {
 	yield browserHistory.push('/main/providers/add')
+}
+
+function* backToProviders() {
+	yield browserHistory.push('/main/providers')
 }
 
 export default function* rootSaga() {
@@ -81,5 +109,6 @@ export default function* rootSaga() {
 
         // Sync
     	yield takeEvery(actionTypes.LOGIN_DATA_ENTERED, login),
+		yield takeEvery(actionTypes.PROVIDER_SAVE_NEW_PROVIDER_SUCCESSFUL, backToProviders)
     ])
 }

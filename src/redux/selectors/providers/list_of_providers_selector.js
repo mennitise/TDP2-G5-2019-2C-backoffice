@@ -15,14 +15,6 @@ const list_of_providers_selector = createSelector(
 		* Mail (Puede ser mas de uno)
         * */
 
-        const listOfProviders = [
-            // {name: '', type: '', languages: [], specialities:[], plan: '', location: [{address: '', phone: ''}], email: ['']},
-            {id: '1', name: 'Lorem Ipsum', type: 'Prestador', languages: ['Español'], specialities:['Pediatra'], plan: 'A210', location: [{address: 'Paseo Colon 850', phone: '0303-456'}], email: ['lorem.ipsum@gmail.com']},
-            {id: '2', name: 'Clinica CRM', type: 'Clinica/Sanatorio', languages: ['Español', 'Ingles'], specialities:['Clínico', 'Pediatría', 'Obstetricia', 'Ginecología'], plan: 'A310', location: [{address: 'Calle Falsa 123', phone: '1234-5678'}], email: ['mail.falso@example.com']},
-			{id: '3', name: 'Clinica CRM', type: 'Clinica/Sanatorio', languages: ['Español', 'Ingles'], specialities:['Clínico', 'Pediatría', 'Obstetricia', 'Ginecología'], plan: 'A310', location: [{address: 'Calle Falsa 123', phone: '1234-5678'}], email: ['mail.falso@example.com']},
-        ]
-        console.log(providers)
-
         const providersToShow = providers.map(p => {
             return {
                 ...p,

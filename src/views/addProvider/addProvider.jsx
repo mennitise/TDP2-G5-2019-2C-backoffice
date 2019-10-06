@@ -20,12 +20,6 @@ class AddProvider extends PureComponent {
 		}
 	}
 
-	handleSubmit2 = ev => {
-		console.log(ev.target.value)
-		ev.preventDefault()
-		ev.stopPropagation()
-	}
-
 	onNameChange = ev => {
 		this.setState({
 			...this.state,

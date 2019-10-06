@@ -18,6 +18,11 @@ const providerActions = {
 			providers
 		}
 
+	},
+	saveNewProviderSuccessful: function () {
+		return {
+			type: actionTypes.PROVIDER_SAVE_NEW_PROVIDER_SUCCESSFUL,
+		}
 	}
 }
 
