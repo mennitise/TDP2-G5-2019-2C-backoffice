@@ -203,7 +203,7 @@ hr {
 
 .error-message {
     color: #dc3545;
-    font-size: small;
+    font-size: 14px;
 }
 
 .custom-error-message {
