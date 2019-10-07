@@ -20,7 +20,7 @@ class Providers extends PureComponent {
 							<h2 className='add-provider-left'>Prestadores</h2>
 							<div className='add-provider-right'>
 								<img className='add-provider-img' src={add}/>
-								<h5 className='add-provider-text'>Agregar Prestador</h5>
+								<h5 className='add-provider-text'>Agregar prestador</h5>
 							</div>
 						</div>
 						<div className='list-container'>

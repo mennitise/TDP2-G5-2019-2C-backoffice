@@ -9,7 +9,7 @@ const add_new_provider_selector = createSelector(
 	(providers, specialities, zones) => {
 
 		const plans = ['Selecciona un plan', 'A110', 'A210', 'A310']
-		const types = ['Selecciona un tipo', 'Prestador', 'Sanatorio/Clínica']
+		const types = ['Selecciona un tipo', 'Profesional', 'Sanatorio/Clínica']
 		const languages = [
 			{label: 'Español', value: 1},
 			{label: 'Inglés', value: 2}

@@ -1,10 +1,10 @@
 export default {
 	SPANISH: {
         user: 'Usuario',
-        username: 'Nombre de Usuario',
+        username: 'Nombre de usuario',
         password: 'Contraseña',
         enter: 'Ingresar',
-        signin: 'Iniciar Sesión',
+        signin: 'Iniciar sesión',
         signup: 'Registarse',
     },
 }
