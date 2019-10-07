@@ -193,7 +193,7 @@ class AddProvider extends PureComponent {
 					<Form.Group className='form-group' controlId="formName">
 						<Form.Label>Nombre</Form.Label>
 						<Form.Control required type="string" onChange={this.onNameChange} placeholder={`${translations.SPANISH.enter} nombre`} />
-						<Form.Control.Feedback className='error-message' type="invalid"> Por favor, ingrese el Nombre. </Form.Control.Feedback>
+						<Form.Control.Feedback className='error-message' type="invalid"> Nombre inválido </Form.Control.Feedback>
 					</Form.Group>
 
 
@@ -212,7 +212,7 @@ class AddProvider extends PureComponent {
 								placeholder='Selecciona las especialidades'
 							/>
 							{(this.state.validated && this.state.specialities.length <= 0) &&
-								<p className='error-message'>Por favor seleccione como mínimo una especialidad</p>
+								<p className='error-message'>Especialidad inválida</p>
 							}
 						</div>
 					</Form.Group>
@@ -226,7 +226,7 @@ class AddProvider extends PureComponent {
 								return (<option key={`type-${i}`} value={i}>{t}</option>)
 							})}
 						</Form.Control>
-						<Form.Control.Feedback className='error-message' type="invalid"> Por favor, seleccione un tipo. </Form.Control.Feedback>
+						<Form.Control.Feedback className='error-message' type="invalid">Tipo inválido</Form.Control.Feedback>
 					</Form.Group>
 
 
@@ -238,7 +238,7 @@ class AddProvider extends PureComponent {
 								return (<option key={`plan-${i}`} value={i}>{p}</option>)
 							})}
 						</Form.Control>
-						<Form.Control.Feedback className='error-message' type="invalid"> Por favor, seleccione un plan. </Form.Control.Feedback>
+						<Form.Control.Feedback className='error-message' type="invalid">Plan inválido</Form.Control.Feedback>
 					</Form.Group>
 
 
@@ -254,11 +254,11 @@ class AddProvider extends PureComponent {
 								options={this.props.languages}
 								className="basic-multi-select"
 								classNamePrefix="select"
-								placeholder='Selecciona los lenguajes'
+								placeholder='Selecciona los idiomas'
 							/>
 						</div>
 						{(this.state.validated && this.state.languages.length <= 0) &&
-							<p className='error-message'>Por favor seleccione como mínimo un lenguaje</p>
+							<p className='error-message'>Idioma inválido</p>
 						}
 					</Form.Group>
 
@@ -268,7 +268,7 @@ class AddProvider extends PureComponent {
 							<Form.Label className='add-email-left'>Emails</Form.Label>
 							<div className='add-email-right' onClick={this.addEmail}>
 								<img className='add-email-img' src={add}/>
-								<h5 className='add-email-text'>Agregar Email</h5>
+								<h5 className='add-email-text'>Agregar email</h5>
 							</div>
 						</div>
 						{this.state.emails.map((email, i) => (
@@ -278,7 +278,7 @@ class AddProvider extends PureComponent {
 									onChange={ev => { this.onEmailsChange(ev, i) }}
 									type="email"
 									placeholder={`${translations.SPANISH.enter} un email`}/>
-								<Form.Control.Feedback className='error-message' type="invalid"> Por favor, ingrese el email. </Form.Control.Feedback>
+								<Form.Control.Feedback className='error-message' type="invalid">Email inválido</Form.Control.Feedback>
 							</div>
 						))}
 					</Form.Group>
@@ -286,10 +286,10 @@ class AddProvider extends PureComponent {
 
 					<Form.Group className='form-group' controlId='formLocation'>
 						<div className='email-wrapper' onClick={this.addProviderHandler}>
-							<Form.Label  className='add-email-left'>Direcciones y Telefonos</Form.Label>
+							<Form.Label  className='add-email-left'>Direcciones y teléfonos</Form.Label>
 							<div className='add-email-right' onClick={this.addAddress}>
 								<img className='add-email-img' src={add}/>
-								<h5 className='add-email-text'>Agregar Dirección</h5>
+								<h5 className='add-email-text'>Agregar dirección</h5>
 							</div>
 						</div>
 						{ this.state.addresses.map((address, i) => (
@@ -304,7 +304,7 @@ class AddProvider extends PureComponent {
 											type="string"
 											onChange={ev => { this.onAddressChange(ev.target.value, i) }}
 											placeholder={`${translations.SPANISH.enter} dirección`} />
-										<Form.Control.Feedback className='error-message' type="invalid"> Por favor, ingrese la direccion. </Form.Control.Feedback>
+										<Form.Control.Feedback className='error-message' type="invalid">Dirección inválida</Form.Control.Feedback>
 									</div>
 									<div className='form-address-right'>
 										<Form.Control
@@ -324,7 +324,7 @@ class AddProvider extends PureComponent {
 												return (<option key={`zones-${i}`} value={p.id}>{p.name}</option>)
 											})}
 										</Form.Control>
-										<Form.Control.Feedback className='error-message' type="invalid"> Por favor, ingrese una zona. </Form.Control.Feedback>
+										<Form.Control.Feedback className='error-message' type="invalid">Localidad inválida</Form.Control.Feedback>
 									</div>
 									<div className='form-address-lat-middle'>
 										<Form.Control
@@ -332,8 +332,8 @@ class AddProvider extends PureComponent {
 											type="number"
 											step='.000001'
 											onChange={ev => { this.onLatitudeChange(ev.target.value, i) }}
-											placeholder={`${translations.SPANISH.enter} Latitud`} />
-										<Form.Control.Feedback className='error-message' type="invalid"> Por favor, ingrese latitud. </Form.Control.Feedback>
+											placeholder={`${translations.SPANISH.enter} latitud`} />
+										<Form.Control.Feedback className='error-message' type="invalid">Latitud inválida</Form.Control.Feedback>
 									</div>
 									<div className='form-address-lat-right'>
 										<Form.Control
@@ -341,8 +341,8 @@ class AddProvider extends PureComponent {
 											type="number"
 											step='.000001'
 											onChange={ev => { this.onLongitudeChange(ev.target.value, i)}}
-											placeholder={`${translations.SPANISH.enter} Longitud`} />
-										<Form.Control.Feedback className='error-message' type="invalid"> Por favor, ingrese longitud. </Form.Control.Feedback>
+											placeholder={`${translations.SPANISH.enter} longitud`} />
+										<Form.Control.Feedback className='error-message' type="invalid">Longitud inválida</Form.Control.Feedback>
 									</div>
 								</div>
 

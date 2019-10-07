@@ -7,7 +7,7 @@ const list_of_providers_selector = createSelector(
     (providers) => {
         /*
         * Nombre
-		* Tipo (prestador o clinica/sanatorio)
+		* Tipo (profesional o clinica/sanatorio)
 		* Idiomas
 		* Especialidades (Usar genericas - tomar de la base de datos)
 		* Plan
@@ -21,7 +21,7 @@ const list_of_providers_selector = createSelector(
                 specialities: p.specialties,
                 location: p.offices,
                 email: p.emails,
-                type: (p.type === 'PROFESIONAL') ? 'Prestador' : 'Clinica/Sanatorio'
+                type: (p.type === 'PROFESIONAL') ? 'Profesional' : 'Clinica/Sanatorio'
             }
         })
 
