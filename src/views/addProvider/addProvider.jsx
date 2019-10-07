@@ -193,7 +193,7 @@ class AddProvider extends PureComponent {
 					<Form.Group className='form-group' controlId="formName">
 						<Form.Label>Nombre</Form.Label>
 						<Form.Control required type="string" onChange={this.onNameChange} placeholder={`${translations.SPANISH.enter} nombre`} />
-						<Form.Control.Feedback type="invalid"> Por favor, ingrese el Nombre. </Form.Control.Feedback>
+						<Form.Control.Feedback className='error-message' type="invalid"> Por favor, ingrese el Nombre. </Form.Control.Feedback>
 					</Form.Group>
 
 
@@ -226,7 +226,7 @@ class AddProvider extends PureComponent {
 								return (<option key={`type-${i}`} value={i}>{t}</option>)
 							})}
 						</Form.Control>
-						<Form.Control.Feedback type="invalid"> Por favor, seleccione un tipo. </Form.Control.Feedback>
+						<Form.Control.Feedback className='error-message' type="invalid"> Por favor, seleccione un tipo. </Form.Control.Feedback>
 					</Form.Group>
 
 
@@ -238,7 +238,7 @@ class AddProvider extends PureComponent {
 								return (<option key={`plan-${i}`} value={i}>{p}</option>)
 							})}
 						</Form.Control>
-						<Form.Control.Feedback type="invalid"> Por favor, seleccione un plan. </Form.Control.Feedback>
+						<Form.Control.Feedback className='error-message' type="invalid"> Por favor, seleccione un plan. </Form.Control.Feedback>
 					</Form.Group>
 
 
@@ -278,7 +278,7 @@ class AddProvider extends PureComponent {
 									onChange={ev => { this.onEmailsChange(ev, i) }}
 									type="email"
 									placeholder={`${translations.SPANISH.enter} un email`}/>
-								<Form.Control.Feedback type="invalid"> Por favor, ingrese el email. </Form.Control.Feedback>
+								<Form.Control.Feedback className='error-message' type="invalid"> Por favor, ingrese el email. </Form.Control.Feedback>
 							</div>
 						))}
 					</Form.Group>
@@ -304,7 +304,7 @@ class AddProvider extends PureComponent {
 											type="string"
 											onChange={ev => { this.onAddressChange(ev.target.value, i) }}
 											placeholder={`${translations.SPANISH.enter} dirección`} />
-										<Form.Control.Feedback type="invalid"> Por favor, ingrese la direccion. </Form.Control.Feedback>
+										<Form.Control.Feedback className='error-message' type="invalid"> Por favor, ingrese la direccion. </Form.Control.Feedback>
 									</div>
 									<div className='form-address-right'>
 										<Form.Control
@@ -324,7 +324,7 @@ class AddProvider extends PureComponent {
 												return (<option key={`zones-${i}`} value={p.id}>{p.name}</option>)
 											})}
 										</Form.Control>
-										<Form.Control.Feedback type="invalid"> Por favor, ingrese una zona. </Form.Control.Feedback>
+										<Form.Control.Feedback className='error-message' type="invalid"> Por favor, ingrese una zona. </Form.Control.Feedback>
 									</div>
 									<div className='form-address-lat-middle'>
 										<Form.Control
@@ -333,7 +333,7 @@ class AddProvider extends PureComponent {
 											step='.000001'
 											onChange={ev => { this.onLatitudeChange(ev.target.value, i) }}
 											placeholder={`${translations.SPANISH.enter} Latitud`} />
-										<Form.Control.Feedback type="invalid"> Por favor, ingrese latitud. </Form.Control.Feedback>
+										<Form.Control.Feedback className='error-message' type="invalid"> Por favor, ingrese latitud. </Form.Control.Feedback>
 									</div>
 									<div className='form-address-lat-right'>
 										<Form.Control
@@ -342,7 +342,7 @@ class AddProvider extends PureComponent {
 											step='.000001'
 											onChange={ev => { this.onLongitudeChange(ev.target.value, i)}}
 											placeholder={`${translations.SPANISH.enter} Longitud`} />
-										<Form.Control.Feedback type="invalid"> Por favor, ingrese longitud. </Form.Control.Feedback>
+										<Form.Control.Feedback className='error-message' type="invalid"> Por favor, ingrese longitud. </Form.Control.Feedback>
 									</div>
 								</div>
 

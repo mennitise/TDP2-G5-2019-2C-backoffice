@@ -24,3 +24,9 @@
     display: flex;
     justify-content: space-around;
 }
+
+.modify-button-card {
+    background-color: #FF5722;
+    border-color: #FF5722;
+    color: #FFFFFF;
+}

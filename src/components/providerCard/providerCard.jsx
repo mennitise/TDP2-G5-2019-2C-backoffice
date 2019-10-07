@@ -27,6 +27,8 @@ class ProviderCard extends PureComponent {
 									text += ' - Teléfono: ' + loc.phone
 								}
 
+								text = `${text} - Latitud: ${loc.lat}; Longitud: ${loc.lon}`
+
 								return(
 									<p key={`location-${idx}`} className='items'>
 										{text}
@@ -48,7 +50,7 @@ class ProviderCard extends PureComponent {
 						</div>
 						<div className='card-buttons'>
 							<div className='card-buttons-size'>
-								<Button className='button-card' variant="primary">Modificar</Button>
+								<Button className='modify-button-card' variant="primary">Modificar</Button>
 								<Button className='button-card' variant="secondary">Borrar</Button>
 							</div>
 						</div>
