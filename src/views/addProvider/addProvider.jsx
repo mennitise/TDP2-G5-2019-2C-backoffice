@@ -212,7 +212,7 @@ class AddProvider extends PureComponent {
 								placeholder='Selecciona las especialidades'
 							/>
 							{(this.state.validated && this.state.specialities.length <= 0) &&
-								<p className='error-message'>Especialidad inválida</p>
+								<p className='error-message custom-error-message'>Especialidad inválida</p>
 							}
 						</div>
 					</Form.Group>
@@ -258,7 +258,7 @@ class AddProvider extends PureComponent {
 							/>
 						</div>
 						{(this.state.validated && this.state.languages.length <= 0) &&
-							<p className='error-message'>Idioma inválido</p>
+							<p className='error-message custom-error-message'>Idioma inválido</p>
 						}
 					</Form.Group>
 
