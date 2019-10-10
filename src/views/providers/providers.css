@@ -209,3 +209,15 @@ hr {
 .custom-error-message {
     margin-top: .25rem;
 }
+
+.mapouter{
+    display: flex;
+    justify-content: center;
+    position:relative;
+    text-align:right;
+}
+
+.gmap_canvas {
+    overflow:hidden;
+    background:none!important;
+}

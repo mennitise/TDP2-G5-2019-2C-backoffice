@@ -17,6 +17,8 @@ class AddProvidersContainer extends PureComponent {
 				specialities={this.props.specialities}
 				zones={this.props.zones}
 				saveNewProviderSelectedHandler={this.props.actions.saveNewProviderSelected}
+				mapWidth={this.props.mapWidth}
+				mapHeight={this.props.mapHeight}
 			/>
 		)
 	}

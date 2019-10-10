@@ -144,7 +144,7 @@ class AddProvider extends PureComponent {
 		})
 	}
 
-	addEmail = ev => {
+	addEmail = () => {
 		const emails = [...this.state.emails]
 		emails.push(null)
 
@@ -154,7 +154,7 @@ class AddProvider extends PureComponent {
 		})
 	}
 
-	addAddress = ev => {
+	addAddress = () => {
 		const addresses = [...this.state.addresses]
 		addresses.push({address: null, phone: null})
 		this.setState({
@@ -205,7 +205,7 @@ class AddProvider extends PureComponent {
 								defaultValue={[]}
 								isMulti
 								name="colors"
-								onChange={this. onSpecialitiesChange}
+								onChange={this.onSpecialitiesChange}
 								options={this.props.specialities}
 								className="basic-multi-select"
 								classNamePrefix="select"
@@ -345,7 +345,22 @@ class AddProvider extends PureComponent {
 										<Form.Control.Feedback className='error-message' type="invalid">Longitud inválida</Form.Control.Feedback>
 									</div>
 								</div>
-
+								{address.latitude && address.longitude &&
+									<div className="mapouter">
+										<div className="gmap_canvas">
+											<iframe
+												width={this.props.mapWidth}
+												height={this.props.mapHeight}
+												id="gmap_canvas"
+												src={`https://maps.google.com/maps?q=${address.latitude},${address.longitude}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+												frameBorder="0"
+												scrolling="no"
+												marginHeight="0"
+												marginWidth="0">
+											</iframe>
+										</div>
+									</div>
+								}
 							</div>
 						))}
 					</Form.Group>
