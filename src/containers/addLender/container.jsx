@@ -2,21 +2,21 @@ import React, {PureComponent} from 'react'
 import { connect } from 'react-redux'
 import bindActionsToDispatch from 'helpers/bindActionsToDispatch'
 
-import providerActions from 'redux/actions/providerActions'
-import { providersSelectors } from 'redux/selectors'
-import AddProvider from 'views/addProvider/addProvider'
+import lenderActions from 'redux/actions/lenderActions'
+import { lendersSelectors } from 'redux/selectors'
+import AddLender from 'views/addLender/addLender'
 
 
-class AddProvidersContainer extends PureComponent {
+class AddLendersContainer extends PureComponent {
 	render() {
 		return(
-			<AddProvider
+			<AddLender
 				plans={this.props.plans}
 				types={this.props.types}
 				languages={this.props.languages}
 				specialities={this.props.specialities}
 				zones={this.props.zones}
-				saveNewProviderSelectedHandler={this.props.actions.saveNewProviderSelected}
+				saveNewLenderSelectedHandler={this.props.actions.saveNewLenderSelected}
 				mapWidth={this.props.mapWidth}
 				mapHeight={this.props.mapHeight}
 			/>
@@ -25,13 +25,13 @@ class AddProvidersContainer extends PureComponent {
 }
 
 function mapStateToProps(state) {
-	return providersSelectors.addNewProviderSelector(state)
+	return lendersSelectors.addNewLenderSelector(state)
 }
 
 function mapDispatchToProps(dispatch) {
 	return bindActionsToDispatch({
-		saveNewProviderSelected: providerActions.saveNewProviderSelected,
+		saveNewLenderSelected: lenderActions.saveNewLenderSelected,
 	}, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddProvidersContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(AddLendersContainer)

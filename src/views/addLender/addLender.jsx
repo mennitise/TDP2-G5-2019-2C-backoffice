@@ -4,7 +4,7 @@ import translations from 'helpers/enums/translations'
 import add from 'assets/images/add.svg'
 import Select from 'react-select';
 
-class AddProvider extends PureComponent {
+class AddLender extends PureComponent {
 
 	constructor(props) {
 		super(props)
@@ -163,8 +163,8 @@ class AddProvider extends PureComponent {
 		})
 	}
 
-	saveProviderHandler = () => {
-		this.props.saveNewProviderSelectedHandler(
+	saveLenderHandler = () => {
+		this.props.saveNewLenderSelectedHandler(
 			this.state
 		)
 	}
@@ -176,7 +176,7 @@ class AddProvider extends PureComponent {
 			const form = event.currentTarget
 
 			if (form.checkValidity()) {
-				this.saveProviderHandler()
+				this.saveLenderHandler()
 			}
 
 			this.setState({
@@ -185,9 +185,9 @@ class AddProvider extends PureComponent {
 			})
 		}
 		return(
-			<div className='wrapper-add-provider'>
-				<Form noValidate validated={this.state.validated} className='add-provider-form' onSubmit={handleSubmit}>
-					<h2 className='new-provider'>Alta de Prestador</h2>
+			<div className='wrapper-add-lender'>
+				<Form noValidate validated={this.state.validated} className='add-lender-form' onSubmit={handleSubmit}>
+					<h2 className='new-lender'>Alta de Prestador</h2>
 
 
 					<Form.Group className='form-group' controlId="formName">
@@ -199,7 +199,7 @@ class AddProvider extends PureComponent {
 
 					<Form.Group className='form-group' controlId="formSpecialities">
 						<Form.Label>Especialidades</Form.Label>
-						<div className='add-provider-specialities'>
+						<div className='add-lender-specialities'>
 							<Select
 								required
 								defaultValue={[]}
@@ -244,7 +244,7 @@ class AddProvider extends PureComponent {
 
 					<Form.Group className='form-group' controlId='formLanguages'>
 						<Form.Label>Idiomas</Form.Label>
-						<div className='add-provider-languages'>
+						<div className='add-lender-languages'>
 							<Select
 								required
 								defaultValue={[]}
@@ -264,7 +264,7 @@ class AddProvider extends PureComponent {
 
 
 					<Form.Group className='form-group' controlId='formEmails'>
-						<div className='email-wrapper' onClick={this.addProviderHandler}>
+						<div className='email-wrapper' onClick={this.addLenderHandler}>
 							<Form.Label className='add-email-left'>Emails</Form.Label>
 							<div className='add-email-right' onClick={this.addEmail}>
 								<img className='add-email-img' src={add}/>
@@ -285,7 +285,7 @@ class AddProvider extends PureComponent {
 
 
 					<Form.Group className='form-group' controlId='formLocation'>
-						<div className='email-wrapper' onClick={this.addProviderHandler}>
+						<div className='email-wrapper' onClick={this.addLenderHandler}>
 							<Form.Label  className='add-email-left'>Direcciones y teléfonos</Form.Label>
 							<div className='add-email-right' onClick={this.addAddress}>
 								<img className='add-email-img' src={add}/>
@@ -377,4 +377,4 @@ class AddProvider extends PureComponent {
 	}
 }
 
-export default AddProvider
+export default AddLender

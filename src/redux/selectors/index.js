@@ -1,7 +1,7 @@
 import userSelectors from './user'
-import providersSelectors from './providers'
+import lendersSelectors from './lenders'
 
 export {
     userSelectors,
-    providersSelectors,
+    lendersSelectors,
 }

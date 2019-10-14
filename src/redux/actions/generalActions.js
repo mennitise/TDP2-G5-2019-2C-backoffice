@@ -15,9 +15,9 @@ const generalActions = {
             height,
         }
     },
-    providersRouteInitialize: function(){
+    lendersRouteInitialize: function(){
         return {
-            type: actionTypes.PROVIDERS_ROUTE_INITIALIZE,
+            type: actionTypes.LENDERS_ROUTE_INITIALIZE,
         }
     },
 }

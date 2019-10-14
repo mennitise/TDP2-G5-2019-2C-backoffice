@@ -14,7 +14,7 @@ class Login extends PureComponent {
 		event.preventDefault()
 		event.stopPropagation()
 		this.props.onLogin()
-		browserHistory.push('/main/providers')
+		browserHistory.push('/main/lenders')
 	}
 
 	render() {

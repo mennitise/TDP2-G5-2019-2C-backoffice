@@ -23,9 +23,17 @@
     width: 100%;
 }
 
-.list-options {
-    padding-left: 15%;
+.sidebar-logo-option {
+    width: 20%;
+    height: 20%;
     padding-right: 5%;
+    fill: white;
+}
+
+.list-options {
+    padding-left: 5%;
+    padding-right: 5%;
+    list-style-type: none;
 }
 
 .content {
@@ -38,7 +46,7 @@
     width: 100%;
 }
 
-.list-provider {
+.list-lender {
     font-size: 16px;
     padding-top: 2%;
     padding-bottom: 2%;
@@ -57,22 +65,22 @@
     padding-bottom: 3%;
 }
 
-.add-provider-left {
+.add-lender-left {
     width: 100%;
     margin-bottom: 0;
     font-weight: bold;
     flex-basis: 70%;
 }
 
-.add-provider-text {
+.add-lender-text {
     margin-bottom: 0;
 }
 
-.add-provider-img {
+.add-lender-img {
     padding-left: 3%;
 }
 
-.add-provider-right {
+.add-lender-right {
     width: 100%;
     display: flex;
     color: #212121;
@@ -147,7 +155,7 @@ hr {
     flex-direction: column;
 }
 
-.new-provider {
+.new-lender {
     padding-bottom: 3%;
     font-weight: bold;
 }
@@ -221,3 +229,31 @@ hr {
     overflow:hidden;
     background:none!important;
 }
+
+.filters {
+    width: 100%;
+    display: flex;
+    font-size: medium;
+    justify-content: space-between;
+}
+
+.filters-img {
+    width: 4%;
+}
+
+.filters-name {
+    width: 30%;
+    flex-shrink: 1;
+}
+
+.filters-speciality {
+    width: 30%;
+    flex-shrink: 1;
+}
+
+.filters-plan {
+    width: 30%;
+    flex-shrink: 1;
+}
+
+

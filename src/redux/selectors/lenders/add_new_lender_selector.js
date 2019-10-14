@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect'
 
-const getProviders = state => state.providers
+const getLenders = state => state.lenders
 const getSpecialities = state => state.specialities.list
 const getZones = state => state.zones.list
 const getUI = state => state.ui
 
-const add_new_provider_selector = createSelector(
-	[ getProviders, getSpecialities, getZones, getUI ],
-	(providers, specialities, zones, ui) => {
+const add_new_lender_selector = createSelector(
+	[ getLenders, getSpecialities, getZones, getUI ],
+	(lenders, specialities, zones, ui) => {
 
 		const plans = ['Selecciona un plan', 'A110', 'A210', 'A310']
 		const types = ['Selecciona un tipo', 'Profesional', 'Sanatorio/Clínica']
@@ -31,4 +31,4 @@ const add_new_provider_selector = createSelector(
 	}
 )
 
-export default add_new_provider_selector
+export default add_new_lender_selector

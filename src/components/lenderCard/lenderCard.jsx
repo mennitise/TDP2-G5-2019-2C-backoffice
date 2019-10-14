@@ -4,12 +4,12 @@ import PropTypes from 'prop-types'
 import {Card} from "react-bootstrap"
 import Button from "react-bootstrap/Button"
 
-import './providerCard.css'
+import './lenderCard.css'
 
-class ProviderCard extends PureComponent {
+class LenderCard extends PureComponent {
 	render() {
 		return (
-			<div className='list-provider'>
+			<div className='list-lender'>
 				<Card>
 					<Card.Header as='h4'><b>{this.props.name}</b></Card.Header>
 					<Card.Body>
@@ -62,7 +62,7 @@ class ProviderCard extends PureComponent {
 	}
 }
 
-ProviderCard.defaultProps = {
+LenderCard.defaultProps = {
 	specialities: [],
 	type: '',
 	languages: [],
@@ -71,7 +71,7 @@ ProviderCard.defaultProps = {
 	email: [''],
 }
 
-ProviderCard.propTypes = {
+LenderCard.propTypes = {
 	name: PropTypes.string.isRequired,
 	specialities: PropTypes.arrayOf(PropTypes.string),
 	type: PropTypes.string,
@@ -84,4 +84,4 @@ ProviderCard.propTypes = {
 	email: PropTypes.arrayOf(PropTypes.string),
 }
 
-export default ProviderCard
+export default LenderCard

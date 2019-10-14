@@ -1,12 +1,12 @@
 import generalActions from './generalActions'
 import loginActions from './loginActions'
-import providerActions from './providerActions'
+import lenderActions from './lenderActions'
 import specialitiesActions from './specialitiesActions'
 
 const actions = {
     ...generalActions,
     ...loginActions,
-    ...providerActions,
+    ...lenderActions,
     ...specialitiesActions,
 }
 

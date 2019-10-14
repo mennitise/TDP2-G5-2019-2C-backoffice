@@ -3,7 +3,7 @@ import { all, call, put, get, takeEvery, takeLatest } from 'redux-saga/effects'
 import browserHistory from 'helpers/history'
 import loginActions from "./actions/loginActions"
 import zonesActions from './actions/zonesActions'
-import providerActions from "./actions/providerActions"
+import lenderActions from "./actions/lenderActions"
 import specialitiesActions from "./actions/specialitiesActions"
 
 const baseURL = 'https://tdp2-crmedical-api.herokuapp.com/'
@@ -43,29 +43,29 @@ export function* getZones() {
 	}
 }
 
-function* getProviders() {
+function* getLenders() {
 	try {
 		const endpoint = baseURL + 'lenders'
 		const response = yield call(fetch, endpoint)
 		const data = yield response.json()
-		yield put(providerActions.getProvidersSuccess(data))
+		yield put(lenderActions.getLendersSuccess(data))
 	} catch (error) {
 		console.log(error)
 	}
 }
 
-export function* saveNewProvider(action) {
+export function* saveNewLender(action) {
 	try {
 		const languages = ['Español', 'Ingles']
 		const plans = ['A110', 'A210', 'A310']
 		const data = {
-			type: (action.providerData.type === '1') ? 'PROFESIONAL' : 'SANATORIO',
-			name: action.providerData.name,
-			languages: action.providerData.languages.map(idLang => languages[idLang - 1]),
-			specialties: action.providerData.specialities,
-			plan: plans[action.providerData.plan - 1],
-			emails: action.providerData.emails,
-			offices: action.providerData.addresses.map(office => {
+			type: (action.lenderData.type === '1') ? 'PROFESIONAL' : 'SANATORIO',
+			name: action.lenderData.name,
+			languages: action.lenderData.languages.map(idLang => languages[idLang - 1]),
+			specialties: action.lenderData.specialities,
+			plan: plans[action.lenderData.plan - 1],
+			emails: action.lenderData.emails,
+			offices: action.lenderData.addresses.map(office => {
 				return {
 					address: office.address,
 					zone_id: office.zone,
@@ -82,7 +82,7 @@ export function* saveNewProvider(action) {
 				"Content-type": "application/json; charset=UTF-8"
 			}
 		})
-		yield put(providerActions.saveNewProviderSuccessful())
+		yield put(lenderActions.saveNewLenderSuccessful())
 	} catch (error) {
 		console.log(error)
 	}
@@ -90,12 +90,12 @@ export function* saveNewProvider(action) {
 
 // Redirections
 
-function* redirectToAddNewProvider(action) {
-	yield browserHistory.push('/main/providers/add')
+function* redirectToAddNewLender(action) {
+	yield browserHistory.push('/main/lenders/add')
 }
 
-function* backToProviders() {
-	yield browserHistory.push('/main/providers')
+function* backToLenders() {
+	yield browserHistory.push('/main/lenders')
 }
 
 export default function* rootSaga() {
@@ -103,12 +103,12 @@ export default function* rootSaga() {
 		// Redirections
 		yield takeLatest(actionTypes.APP_INITIALIZE, getSpecialities),
 		yield takeLatest(actionTypes.APP_INITIALIZE, getZones),
-		yield takeEvery(actionTypes.PROVIDERS_ROUTE_INITIALIZE, getProviders),
-		yield takeEvery(actionTypes.PROVIDER_ADD_NEW_PROVIDER_SELECTED, redirectToAddNewProvider),
-        yield takeEvery(actionTypes.PROVIDER_SAVE_NEW_PROVIDER_SELECTED, saveNewProvider),
+		yield takeEvery(actionTypes.LENDERS_ROUTE_INITIALIZE, getLenders),
+		yield takeEvery(actionTypes.LENDER_ADD_NEW_LENDER_SELECTED, redirectToAddNewLender),
+        yield takeEvery(actionTypes.LENDER_SAVE_NEW_LENDER_SELECTED, saveNewLender),
 
         // Sync
     	yield takeEvery(actionTypes.LOGIN_DATA_ENTERED, login),
-		yield takeEvery(actionTypes.PROVIDER_SAVE_NEW_PROVIDER_SUCCESSFUL, backToProviders)
+		yield takeEvery(actionTypes.LENDER_SAVE_NEW_LENDER_SUCCESSFUL, backToLenders)
     ])
 }

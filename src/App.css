@@ -51,18 +51,22 @@
   }
 }
 
-.add-provider-form {
+.add-lender-form {
   width: 100%;
   height: 100%;
   padding: 7.5%;
 }
 
-.add-provider-specialities {
+.add-lender-specialities {
   width: 100%;
   font-size: medium;
 }
 
-.add-provider-languages {
+.add-lender-languages {
   width: 100%;
   font-size: medium;
+}
+
+.logo {
+  fill: white;
 }
