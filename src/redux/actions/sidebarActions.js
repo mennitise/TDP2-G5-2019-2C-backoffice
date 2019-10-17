@@ -13,7 +13,7 @@ const sidebarActions = {
 	},
     autorizationsSelected: function() {
 		return {
-			type: actionTypes.SIDEBAR_AUTORIZATIONS_SELECTED,
+			type: actionTypes.SIDEBAR_AUTHORIZATIONS_SELECTED,
 		}
 	},
 }

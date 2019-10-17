@@ -5,9 +5,40 @@ import add from 'assets/images/add.svg'
 import search from 'assets/images/search.svg'
 
 import LenderCard from 'components/lenderCard/lenderCard.jsx'
+import Paginated from "components/paginated/paginated.jsx"
 import { Form } from "react-bootstrap"
+import PropTypes from "prop-types"
 
 class Lenders extends PureComponent {
+
+	constructor(props) {
+		super(props)
+		this.state = {
+			pages: [],
+			pageSelected: 0,
+			numberOfResults: 0,
+		}
+	}
+
+	chunk = (arr, len) => {
+		let chunks = [], i = 0, n = arr.length
+		while (i < n) {
+			chunks.push(arr.slice(i, i += len));
+		}
+		return chunks;
+	}
+
+	componentDidUpdate() {
+		if (this.state.numberOfResults !== this.props.listOfLenders.length) {
+			const pages = this.chunk(this.props.listOfLenders, 6)
+			const pageSelected = (pages.length > 0) ? 1 : 0
+			this.setState({
+				pages,
+				pageSelected,
+				numberOfResults: this.props.listOfLenders.length,
+			})
+		}
+	}
 
 	onChangeFilterName = ev => {
 		this.props.filterByName(ev.target.value)
@@ -25,8 +56,33 @@ class Lenders extends PureComponent {
 		this.props.addNewLenderSelectedAction()
 	}
 
+	pageSelected = (page) => {
+		this.setState({
+			...this.state,
+			pageSelected: page,
+		})
+	}
+
+	nextPageSelected = () => {
+		if (this.state.pageSelected < this.state.pages.length) {
+			this.setState({
+				...this.state,
+				pageSelected: this.state.pageSelected + 1,
+			})
+		}
+
+	}
+
+	prevPageSelected = () => {
+		if (this.state.pageSelected > 1) {
+			this.setState({
+				...this.state,
+				pageSelected: this.state.pageSelected - 1,
+			})
+		}
+	}
+
     render() {
-		console.log(this.state)
 		return(
 			<div className='wrapper-lenders'>
 				<div className='list'>
@@ -59,8 +115,8 @@ class Lenders extends PureComponent {
 							</div>
 						</div>
 						<div className='list-container'>
-							{ this.props.listOfLenders &&
-								this.props.listOfLenders.map((lender, index) => {
+							{ this.state.pageSelected && this.state.pages && this.state.pages[this.state.pageSelected-1] &&
+								this.state.pages[this.state.pageSelected-1].map((lender, index) => {
 									return (
 										<LenderCard
 											key={`lender-${index}`}
@@ -79,6 +135,12 @@ class Lenders extends PureComponent {
 						</div>
 					</div>
 				</div>
+				<Paginated
+					pages={this.state.pages.length}
+					selected={this.state.pageSelected}
+					pageSelected={this.pageSelected}
+					nextPageSelected={this.nextPageSelected}
+					prevPageSelected={this.prevPageSelected} />
 			</div>
         )
     }

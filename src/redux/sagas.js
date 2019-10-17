@@ -94,21 +94,31 @@ function* redirectToAddNewLender(action) {
 	yield browserHistory.push('/main/lenders/add')
 }
 
-function* backToLenders() {
+function* goToDashboard(){
+	yield browserHistory.push('/main/dash')
+}
+
+function* goToLenders(){
 	yield browserHistory.push('/main/lenders')
+}
+
+function* goToAuthorizations(){
+	yield browserHistory.push('/main/authorizations')
 }
 
 export default function* rootSaga() {
     yield all([
 		// Redirections
-		yield takeLatest(actionTypes.APP_INITIALIZE, getSpecialities),
-		yield takeLatest(actionTypes.APP_INITIALIZE, getZones),
-		yield takeEvery(actionTypes.LENDERS_ROUTE_INITIALIZE, getLenders),
 		yield takeEvery(actionTypes.LENDER_ADD_NEW_LENDER_SELECTED, redirectToAddNewLender),
-        yield takeEvery(actionTypes.LENDER_SAVE_NEW_LENDER_SELECTED, saveNewLender),
+        yield takeEvery(actionTypes.SIDEBAR_DASHBOARD_SELECTED, goToDashboard),
+		yield takeEvery([actionTypes.SIDEBAR_LENDERS_SELECTED, actionTypes.LENDER_SAVE_NEW_LENDER_SUCCESSFUL], goToLenders),
+		yield takeEvery(actionTypes.SIDEBAR_AUTHORIZATIONS_SELECTED, goToAuthorizations),
 
         // Sync
     	yield takeEvery(actionTypes.LOGIN_DATA_ENTERED, login),
-		yield takeEvery(actionTypes.LENDER_SAVE_NEW_LENDER_SUCCESSFUL, backToLenders)
+		yield takeLatest(actionTypes.APP_INITIALIZE, getSpecialities),
+		yield takeLatest(actionTypes.APP_INITIALIZE, getZones),
+		yield takeEvery(actionTypes.LENDERS_ROUTE_INITIALIZE, getLenders),
+		yield takeEvery(actionTypes.LENDER_SAVE_NEW_LENDER_SELECTED, saveNewLender),
     ])
 }

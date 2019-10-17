@@ -14,6 +14,19 @@ import dashLogo from 'assets/images/dash.svg'
 import docLogo from 'assets/images/doctor.svg'
 
 class MainContainer extends PureComponent {
+
+	dashboardHandler = () => {
+		return this.props.actions.dashboardSelected()
+	}
+
+	lendersHandler = () => {
+		return this.props.actions.lendersSelected()
+	}
+
+	ordersHandler = () => {
+		return this.props.actions.autorizationsSelected()
+	}
+
 	render() {
 		return (
 			<div className='wrapper'>
@@ -22,17 +35,23 @@ class MainContainer extends PureComponent {
 						<img src={logo} className='sidebar-logo-img' alt="logo" />
 					</div>
 					<ul className='list-options'>
-						<li key='dash'>
-							<img src={dashLogo} className='sidebar-logo-option' alt="logo" />
-							<label>Dashboard</label>
+						<li onClick={this.dashboardHandler}>
+							<div className='sidebar-logo-list'>
+								<img src={dashLogo} className='sidebar-logo-option' alt="logo" />
+								<label className='sidebar-logo-label'>Dashboard</label>
+							</div>
 						</li>
-						<li key='lenders'>
-							<img src={docLogo} className='sidebar-logo-option' alt="logo" />
-							<label>Prestadores</label>
+						<li onClick={this.lendersHandler}>
+							<div className='sidebar-logo-list'>
+								<img src={docLogo} className='sidebar-logo-option' alt="logo" />
+								<label className='sidebar-logo-label'>Prestadores</label>
+							</div>
 						</li>
-						<li key='orders'>
-							<img src={dashLogo} className='sidebar-logo-option' alt="logo" />
-							<label>Autorizaciones</label>
+						<li onClick={this.ordersHandler}>
+							<div className='sidebar-logo-list'>
+								<img src={dashLogo} className='sidebar-logo-option' alt="logo" />
+								<p className='sidebar-logo-label'>Autorizaciones</p>
+							</div>
 						</li>
 					</ul>
 				</div>

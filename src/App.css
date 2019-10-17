@@ -70,3 +70,17 @@
 .logo {
   fill: white;
 }
+
+.sidebar-logo-list {
+  display: flex;
+  padding-bottom: 5%;
+  cursor: pointer;
+}
+
+.sidebar-logo-label {
+  cursor: pointer;
+  font-size: smaller;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

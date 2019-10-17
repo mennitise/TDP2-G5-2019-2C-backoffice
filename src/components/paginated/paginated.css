@@ -1,0 +1,27 @@
+.wrapper-paginated {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-bottom: 5%
+}
+
+.number {
+    margin-top: 0;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+.number-selected {
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.arrow {
+    width: 3%;
+    height: 3%;
+    cursor: pointer;
+}
