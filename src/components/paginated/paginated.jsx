@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import arrowLeft from 'assets/images/arrow-point-to-left.svg'
@@ -11,15 +11,19 @@ class Paginated extends PureComponent {
 	render() {
 		const pages = Array.from(Array(this.props.pages).keys())
 		return (
-			<div className='wrapper-paginated'>
-				<img className='arrow' src={arrowLeft} onClick={this.props.prevPageSelected}/>
-				{pages.map((page, i) => {
-					const pageNumber = page + 1
-					const styles = `number ${(pageNumber === this.props.selected)? 'number-selected' : ''}`
-					return (<p className={styles} onClick={() => this.props.pageSelected(pageNumber)}>{pageNumber}</p>)
-				})}
-				<img className='arrow' src={arrowRight} onClick={this.props.nextPageSelected}/>
-			</div>
+			<Fragment>
+				{ (this.props.pages !== 0) &&
+					<div className='wrapper-paginated'>
+						<img className='arrow' src={arrowLeft} onClick={this.props.prevPageSelected}/>
+						{pages.map((page) => {
+							const pageNumber = page + 1
+							const styles = `number ${(pageNumber === this.props.selected)? 'number-selected' : ''}`
+							return (<p className={styles} onClick={() => this.props.pageSelected(pageNumber)}>{pageNumber}</p>)
+						})}
+						<img className='arrow' src={arrowRight} onClick={this.props.nextPageSelected}/>
+					</div>
+				}
+			</Fragment>
 		)
 	}
 }

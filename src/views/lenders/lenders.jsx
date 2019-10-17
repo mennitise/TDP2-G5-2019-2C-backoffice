@@ -115,7 +115,7 @@ class Lenders extends PureComponent {
 							</div>
 						</div>
 						<div className='list-container'>
-							{ this.state.pageSelected && this.state.pages && this.state.pages[this.state.pageSelected-1] &&
+							{ (this.state.pageSelected !== 0) && (this.state.pages) && this.state.pages[this.state.pageSelected-1] &&
 								this.state.pages[this.state.pageSelected-1].map((lender, index) => {
 									return (
 										<LenderCard
