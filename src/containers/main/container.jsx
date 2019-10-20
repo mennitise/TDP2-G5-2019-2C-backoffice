@@ -6,6 +6,8 @@ import bindActionsToDispatch from 'helpers/bindActionsToDispatch'
 import RegisterContainer from "containers/register/container"
 import LendersContainer from "containers/lenders/container"
 import AddLenderContainer from "containers/addLender/container"
+import AuthorizationsContainer from 'containers/authorizations/container'
+import AuthorizationDetailedContainer from 'containers/authDetailed/container'
 
 import sidebarActions from "redux/actions/sidebarActions"
 
@@ -60,6 +62,8 @@ class MainContainer extends PureComponent {
 						<Route path={`${this.props.match.path}/register`} component={RegisterContainer}/>
 						<Route path={`${this.props.match.path}/lenders/add`} component={AddLenderContainer}/>
 						<Route path={`${this.props.match.path}/lenders`} component={LendersContainer}/>
+						<Route path={`${this.props.match.path}/authorization/:id`} component={AuthorizationDetailedContainer}/>
+						<Route path={`${this.props.match.path}/authorizations`} component={AuthorizationsContainer}/>
 						<Route path={`${this.props.match.path}/dash`} component={null} />
 						<Redirect to="/login" />
 					</Switch>

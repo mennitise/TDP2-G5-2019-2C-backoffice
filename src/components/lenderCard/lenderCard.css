@@ -10,6 +10,13 @@
     margin-bottom: .5em;
 }
 
+.items-field {
+    font-size: 18px;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    padding-left: .5em;
+}
+
 .card-container {
     padding-left: 2%;
     padding-right: 2%;

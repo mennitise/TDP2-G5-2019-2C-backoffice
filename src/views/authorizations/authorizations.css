@@ -1,0 +1,12 @@
+.auth-card {
+    width: 100%;
+}
+
+.auth-img {
+    width: 100%;
+    padding-bottom: 2%;
+}
+
+.auth-field {
+    display: flex;
+}

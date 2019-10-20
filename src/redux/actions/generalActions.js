@@ -15,11 +15,22 @@ const generalActions = {
             height,
         }
     },
-    lendersRouteInitialize: function(){
+    lendersRouteInitialize: function() {
         return {
             type: actionTypes.LENDERS_ROUTE_INITIALIZE,
         }
     },
+    authorizationsRouteInitialize: function() {
+        return {
+            type: actionTypes.AUTHORIZATIONS_ROUTE_INITIALIZE,
+        }
+    },
+    authorizationDetailsRouteInitialize: function(id){
+        return {
+            type: actionTypes.AUTHORIZATIONS_AUTHORIZATION_DETAILS_ROUTE_INITIALIZE,
+            id,
+        }
+    }
 }
 
 export default generalActions

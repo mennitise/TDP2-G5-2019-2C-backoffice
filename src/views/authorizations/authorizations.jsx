@@ -1,15 +1,16 @@
 import React, {PureComponent} from 'react'
 
-import './lenders.css'
+import './authorizations.css'
 import add from 'assets/images/add.svg'
 import search from 'assets/images/search.svg'
 
-import LenderCard from 'components/lenderCard/lenderCard.jsx'
 import Paginated from "components/paginated/paginated.jsx"
 import { Form } from "react-bootstrap"
 import PropTypes from "prop-types"
+import placeholder from 'assets/images/placeholder.jpg'
+import AuthCard from 'components/authCard/authCard'
 
-class Lenders extends PureComponent {
+class Authorizations extends PureComponent {
 
 	constructor(props) {
 		super(props)
@@ -20,28 +21,34 @@ class Lenders extends PureComponent {
 		}
 	}
 
+	updatePages() {
+		if (this.props.listOfAuthorizations && this.state.numberOfResults !== this.props.listOfAuthorizations.length) {
+
+			const pages = this.chunk(this.props.listOfAuthorizations, 6)
+			const pageSelected = (pages.length > 0) ? 1 : 0
+			this.setState({
+				pages,
+				pageSelected,
+				numberOfResults: this.props.listOfAuthorizations.length,
+			})
+		}
+	}
+
+	componentDidMount() {
+		window.scrollTo(0, 0)
+		this.updatePages()
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		this.updatePages()
+	}
+
 	chunk = (arr, len) => {
 		let chunks = [], i = 0, n = arr.length
 		while (i < n) {
 			chunks.push(arr.slice(i, i += len));
 		}
 		return chunks;
-	}
-
-	componentDidMount() {
-		window.scrollTo(0, 0)
-	}
-
-	componentDidUpdate() {
-		if (this.props.listOfLenders && this.state.numberOfResults !== this.props.listOfLenders.length) {
-			const pages = this.chunk(this.props.listOfLenders, 6)
-			const pageSelected = (pages.length > 0) ? 1 : 0
-			this.setState({
-				pages,
-				pageSelected,
-				numberOfResults: this.props.listOfLenders.length,
-			})
-		}
 	}
 
 	onChangeFilterName = ev => {
@@ -54,10 +61,6 @@ class Lenders extends PureComponent {
 
 	onChangeFilterPlan = ev => {
 		this.props.filterByPlan(ev.target.value)
-	}
-
-	addLenderHandler = () => {
-		this.props.addNewLenderSelectedAction()
 	}
 
 	pageSelected = (page) => {
@@ -88,18 +91,12 @@ class Lenders extends PureComponent {
 		window.scrollTo(0, 0)
 	}
 
-    render() {
+	render() {
 		return(
 			<div className='wrapper-lenders'>
 				<div className='list'>
 					<div className='list-wrapper'>
-						<div className='top-title' onClick={this.addLenderHandler}>
-							<h2 className='add-lender-left'>Prestadores</h2>
-							<div className='add-lender-right'>
-								<img className='add-lender-img' src={add}/>
-								<h5 className='add-lender-text'>Agregar prestador</h5>
-							</div>
-						</div>
+						<h2 className='top-title add-lender-left'>Autorizaciones</h2>
 						<div className='filters'>
 							<img className='filters-img' src={search}/>
 							<Form.Control required className='filters-name' type="string" onChange={this.onChangeFilterName} placeholder={`Nombre`} />
@@ -122,19 +119,19 @@ class Lenders extends PureComponent {
 						</div>
 						<div className='list-container'>
 							{ (this.state.pageSelected !== 0) && (this.state.pages) && this.state.pages[this.state.pageSelected-1] &&
-								this.state.pages[this.state.pageSelected-1].map((lender, index) => {
+								this.state.pages[this.state.pageSelected-1].map((auth, index) => {
 									return (
-										<LenderCard
-											key={`lender-${index}`}
-											id={index}
-											name={lender.name}
-											specialities={lender.specialities}
-											type={lender.type}
-											languages={lender.languages}
-											plan={lender.plan}
-											location={lender.location}
-											email={lender.email}
-										/>
+										<div key={auth.id} className='auth-card'>
+											<AuthCard
+												authId={auth.id}
+												authSelectedHandler={this.props.authSelectedHandler}
+												name={auth.name}
+												speciality={auth.speciality}
+												plan={auth.plan}
+												status={auth.status}
+												imgUrl={auth.imgUrl}
+											/>
+										</div>
 									)
 								})
 							}
@@ -148,8 +145,8 @@ class Lenders extends PureComponent {
 					nextPageSelected={this.nextPageSelected}
 					prevPageSelected={this.prevPageSelected} />
 			</div>
-        )
-    }
+		)
+	}
 }
 
-export default Lenders
+export default Authorizations
