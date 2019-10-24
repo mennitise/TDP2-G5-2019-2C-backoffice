@@ -7,7 +7,7 @@ import search from 'assets/images/search.svg'
 import LenderCard from 'components/lenderCard/lenderCard.jsx'
 import Paginated from "components/paginated/paginated.jsx"
 import { Form } from "react-bootstrap"
-import PropTypes from "prop-types"
+import ModalCustom from "components/modal/modal"
 
 class Lenders extends PureComponent {
 
@@ -17,6 +17,8 @@ class Lenders extends PureComponent {
 			pages: [],
 			pageSelected: 0,
 			numberOfResults: 0,
+			modalShow: false,
+			lenderIdToDelete: 0,
 		}
 	}
 
@@ -32,8 +34,8 @@ class Lenders extends PureComponent {
 		window.scrollTo(0, 0)
 	}
 
-	componentDidUpdate() {
-		if (this.props.listOfLenders && this.state.numberOfResults !== this.props.listOfLenders.length) {
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (this.props.listOfLenders && prevProps.listOfLenders !== this.props.listOfLenders) {
 			const pages = this.chunk(this.props.listOfLenders, 6)
 			const pageSelected = (pages.length > 0) ? 1 : 0
 			this.setState({
@@ -88,35 +90,47 @@ class Lenders extends PureComponent {
 		window.scrollTo(0, 0)
 	}
 
+	handleClose = () => this.setState({...this.state, modalShow: false, lenderIdToDelete: 0})
+	handleShow = (id) => this.setState({...this.state, modalShow: true, lenderIdToDelete: id})
+
+	handleDeleteLender = () => {
+		this.props.deleteLenderHandler(this.state.lenderIdToDelete)
+		this.handleClose()
+		window.scrollTo(0, 0)
+	}
+
     render() {
 		return(
 			<div className='wrapper-lenders'>
+				<ModalCustom
+					title='Eliminación de Prestador'
+					message='¿Estas seguro de eliminar este prestador?'
+					show={this.state.modalShow}
+					handleClose={this.handleClose}
+					handleAccept={this.handleDeleteLender}
+				/>
 				<div className='list'>
 					<div className='list-wrapper'>
 						<div className='top-title' onClick={this.addLenderHandler}>
 							<h2 className='add-lender-left'>Prestadores</h2>
 							<div className='add-lender-right'>
-								<img className='add-lender-img' src={add}/>
+								<img className='add-lender-img' src={add} alt='+'/>
 								<h5 className='add-lender-text'>Agregar prestador</h5>
 							</div>
 						</div>
 						<div className='filters'>
-							<img className='filters-img' src={search}/>
+							<img className='filters-img' src={search} alt='Search'/>
 							<Form.Control required className='filters-name' type="string" onChange={this.onChangeFilterName} placeholder={`Nombre`} />
 							<div className='filters-speciality'>
 								<Form.Control required as="select" onChange={this.onChangeFilterSpeciality} >
-									{this.props.specialities.map((t, i) => {
-										if (i===0) return (<option key={`type-${i}`} value='' disabled selected hidden >{t.label}</option>)
-										return (<option key={`type-${i}`} value={i}>{t.label}</option>)
-									})}
+									<option key='placeholder' value='-1' hidden>Especialidad</option>
+									{this.props.specialities.map((t, i) => (<option key={`type-${i+1}`} value={i+1}>{t.label}</option>))}
 								</Form.Control>
 							</div>
 							<div className='filters-plan'>
 								<Form.Control required as="select" onChange={this.onChangeFilterPlan} >
-									{this.props.plans.map((t, i) => {
-										if (i===0) return (<option key={`type-${i}`} value='' disabled selected hidden >{t}</option>)
-										return (<option key={`type-${i}`} value={i}>{t}</option>)
-									})}
+									<option key='placeholder' value='-1' hidden>Plan</option>
+									{this.props.plans.map((t, i) => (<option key={`type-${i}`} value={i}>{t}</option>))}
 								</Form.Control>
 							</div>
 						</div>
@@ -126,7 +140,7 @@ class Lenders extends PureComponent {
 									return (
 										<LenderCard
 											key={`lender-${index}`}
-											id={index}
+											id={lender.id}
 											name={lender.name}
 											specialities={lender.specialities}
 											type={lender.type}
@@ -134,6 +148,7 @@ class Lenders extends PureComponent {
 											plan={lender.plan}
 											location={lender.location}
 											email={lender.email}
+											deleteHandler={this.handleShow}
 										/>
 									)
 								})

@@ -14,13 +14,13 @@ class Paginated extends PureComponent {
 			<Fragment>
 				{ (this.props.pages !== 0) &&
 					<div className='wrapper-paginated'>
-						<img className='arrow' src={arrowLeft} onClick={this.props.prevPageSelected}/>
+						<img className='arrow' src={arrowLeft} onClick={this.props.prevPageSelected} alt='<'/>
 						{pages.map((page) => {
 							const pageNumber = page + 1
 							const styles = `number ${(pageNumber === this.props.selected)? 'number-selected' : ''}`
-							return (<p className={styles} onClick={() => this.props.pageSelected(pageNumber)}>{pageNumber}</p>)
+							return (<p key={page} className={styles} onClick={() => this.props.pageSelected(pageNumber)}>{pageNumber}</p>)
 						})}
-						<img className='arrow' src={arrowRight} onClick={this.props.nextPageSelected}/>
+						<img className='arrow' src={arrowRight} onClick={this.props.nextPageSelected} alt='>'/>
 					</div>
 				}
 			</Fragment>

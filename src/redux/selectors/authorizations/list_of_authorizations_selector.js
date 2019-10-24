@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import plans from 'helpers/enums/plans'
+import status from 'helpers/enums/authorizationStatus'
 
 const getAuthorizations = (state) => state.authorizations
 const getSpecialities = (state) => state.specialities.list
@@ -8,37 +8,35 @@ const list_of_authorizations_selector = createSelector(
 	[ getAuthorizations, getSpecialities ],
 	(authorizations, specialities) => {
 
-		let authorizationsToShow = authorizations.list.map(p => {
-			return {
-				...p,
-				specialities: p.specialties,
-				location: p.offices,
-				email: p.emails,
-				type: (p.type === 'PROFESIONAL') ? 'Profesional' : 'Clinica/Sanatorio'
-			}
-		})
+		let authorizationsToShow = authorizations.list.map(auth => ({
+			id: auth.id,
+			name: `${auth.affiliate.firstname} ${auth.affiliate.lastname}`,
+			speciality: auth.specialty.name,
+			specialityId: auth.specialtyId,
+			plan: 'A210',
+			status: auth.status,
+			imgUrl: auth.url,
+		}))
 
-		const specialitiesList = [{value:0, label:'Especialidad'}, ...specialities.map(sp => ({value: sp.id, label: sp.name}))]
-
-		const plansList = ['Plan', ...Object.values(plans)]
+		const specialitiesList = specialities.map(sp => ({value: sp.id, label: sp.name}))
 
 		if (authorizations.filter.name) {
 			authorizationsToShow = authorizationsToShow.filter(auth => auth.name.toLowerCase().includes(authorizations.filter.name.toLowerCase()))
 		}
 
 		if (authorizations.filter.speciality) {
-			const specialityFiltered = specialities.filter(sp => sp.id == authorizations.filter.speciality)[0].name
-			authorizationsToShow = authorizationsToShow.filter(auth => auth.specialities.indexOf(specialityFiltered) >= 0)
+			const specialityFiltered = specialities.filter(sp => sp.id.toString() === authorizations.filter.speciality)[0].name
+			authorizationsToShow = authorizationsToShow.filter(auth => auth.speciality === specialityFiltered)
 		}
 
-		if (authorizations.filter.plan) {
-			authorizationsToShow = authorizationsToShow.filter(auth => auth.plan === plansList[authorizations.filter.plan])
+		if (authorizations.filter.status) {
+			authorizationsToShow = authorizationsToShow.filter(auth => auth.status === Object.keys(status)[authorizations.filter.status - 1])
 		}
 
 		return {
 			authorizations: authorizationsToShow,
 			specialities: specialitiesList,
-			plans: plansList,
+			status: Object.values(status),
 		}
 	}
 )

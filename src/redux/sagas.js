@@ -1,5 +1,5 @@
 import actionTypes from './actions/actionTypes'
-import { all, call, put, get, takeEvery, takeLatest } from 'redux-saga/effects'
+import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 import browserHistory from 'helpers/history'
 import loginActions from "./actions/loginActions"
 import zonesActions from './actions/zonesActions'
@@ -15,7 +15,7 @@ export function* login(action) {
 	try {
 		const endpoint = 'https://gist.githubusercontent.com/brunokrebs/f1cacbacd53be83940e1e85860b6c65b/raw/to-do-items.json'
 		const response = yield call(fetch, endpoint)
-        const data = yield response.json()
+        yield response.json()
 		yield put(loginActions.loginSuccess('36073333', 'Sebastian Menniti'))
 	} catch(error) {
 		console.log(error)
@@ -47,7 +47,13 @@ export function* getZones() {
 function* getLenders() {
 	try {
 		const endpoint = baseURL + 'lenders'
-		const response = yield call(fetch, endpoint)
+		const options = {
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers' : 'Origin, Content-Type,  X-Requested-With, Accept'
+			}
+		}
+		const response = yield call(fetch, endpoint, options)
 		const data = yield response.json()
 		yield put(lenderActions.getLendersSuccess(data))
 	} catch (error) {
@@ -58,66 +64,14 @@ function* getLenders() {
 function* getAuthorizations() {
 	try {
 		const endpoint = baseURL + 'authorizations'
-		const response = yield call(fetch, endpoint)
+		const options = {
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers' : 'Origin, Content-Type,  X-Requested-With, Accept'
+			}
+		}
+		const response = yield call(fetch, endpoint, options)
 		let data = yield response.json()
-		data = [
-			{
-				id: 1,
-				name: 'Juan Carlos',
-				speciality: 'Pediatría',
-				plan: 'A220',
-				status: 'Pendiente',
-				imgUrl: 'https://fccid.io/png.php?id=3136256&page=0',
-			},
-			{
-				id: 2,
-				name: 'Juan Carlos',
-				speciality: 'Pediatría',
-				plan: 'A220',
-				status: 'Rechazada',
-				imgUrl: 'https://fccid.io/png.php?id=3063323&page=0',
-			},
-			{
-				id: 3,
-				name: 'Juan Carlos',
-				speciality: 'Pediatría',
-				plan: 'A220',
-				status: 'Requiere más información',
-				imgUrl: 'https://qph.fs.quoracdn.net/main-qimg-a5276249f498ca124b3914479d7968ad.webp',
-			},
-			{
-				id: 4,
-				name: 'Juan Carlos',
-				speciality: 'Pediatría',
-				plan: 'A220',
-				status: 'Autorizada',
-				imgUrl: 'https://i.pinimg.com/originals/ed/dc/10/eddc104ac28661aea6ff97b44a9b71b7.png',
-			},
-			{
-				id: 5,
-				name: 'Juan Carlos',
-				speciality: 'Pediatría',
-				plan: 'A220',
-				status: 'Pendiente',
-				imgUrl: 'https://www.club-pescadores.com.ar/media/k2/items/cache/d7f952e4236afc03a202fc64913dc353_L.jpg',
-			},
-			{
-				id: 6,
-				name: 'Juan Carlos',
-				speciality: 'Pediatría',
-				plan: 'A220',
-				status: 'Pendiente',
-				imgUrl: 'http://www.guadianalisis.es/images/CERTIFICADOS/iso_9001.jpg',
-			},
-			{
-				id: 7,
-				name: 'Juan Carlos',
-				speciality: 'Pediatría',
-				plan: 'A220',
-				status: 'Autorizada',
-				imgUrl: 'http://www.guadianalisis.es/images/CERTIFICADOS/certificado_junta.jpg',
-			},
-		]
 		yield put(authorizationsActions.getAuthorizationsSuccess(data))
 	} catch (error) {
 		console.log(error)
@@ -145,7 +99,7 @@ export function* saveNewLender(action) {
 				}
 			}),
 		}
-		const response = yield fetch(baseURL + 'lenders', {
+		yield fetch(baseURL + 'lenders', {
 			method: 'POST',
 			body: JSON.stringify(data),
 			headers: {
@@ -153,6 +107,20 @@ export function* saveNewLender(action) {
 			}
 		})
 		yield put(lenderActions.saveNewLenderSuccessful())
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+function* deleteLender(action) {
+	try {
+		yield fetch(baseURL + 'lenders/' + action.id, {
+			method: 'DELETE',
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		})
+		yield put(lenderActions.deleteLenderSuccessful())
 	} catch (error) {
 		console.log(error)
 	}
@@ -193,8 +161,9 @@ export default function* rootSaga() {
     	yield takeEvery(actionTypes.LOGIN_DATA_ENTERED, login),
 		yield takeLatest(actionTypes.APP_INITIALIZE, getSpecialities),
 		yield takeLatest(actionTypes.APP_INITIALIZE, getZones),
-		yield takeEvery(actionTypes.LENDERS_ROUTE_INITIALIZE, getLenders),
+		yield takeEvery([actionTypes.LENDERS_ROUTE_INITIALIZE, actionTypes.LENDER_DELETE_LENDER_SUCCESS], getLenders),
 		yield takeEvery([actionTypes.AUTHORIZATIONS_ROUTE_INITIALIZE, actionTypes.AUTHORIZATIONS_AUTHORIZATION_DETAILS_ROUTE_INITIALIZE], getAuthorizations),
 		yield takeEvery(actionTypes.LENDER_SAVE_NEW_LENDER_SELECTED, saveNewLender),
-    ])
+		yield takeLatest(actionTypes.LENDER_DELETE_LENDER, deleteLender),
+	])
 }

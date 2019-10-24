@@ -42,6 +42,17 @@ const lenderActions = {
 			speciality,
 		}
 	},
+	deleteLender: function(id) {
+		return {
+			type: actionTypes.LENDER_DELETE_LENDER,
+			id,
+		}
+	},
+	deleteLenderSuccessful: function() {
+		return {
+			type: actionTypes.LENDER_DELETE_LENDER_SUCCESS,
+		}
+	}
 }
 
 export default lenderActions

@@ -46,6 +46,17 @@ function getLendersData(state, action) {
     }
 }
 
+function clearFilters(state) {
+    return {
+        ...state,
+        filter: {
+            name: '',
+            speciality: '',
+            plan: '',
+        }
+    }
+}
+
 const lendersReducer = (state = defaultState, action) => {
     switch(action.type) {
         case t.LENDERS_GET_LENDERS_SUCCESS:
@@ -56,6 +67,8 @@ const lendersReducer = (state = defaultState, action) => {
             return filterBySpeciality(state, action)
         case t.LENDERS_FILTERING_BY_PLAN:
             return filterByPlan(state, action)
+        case t.LENDERS_ROUTE_INITIALIZE:
+            return clearFilters(state)
         default:
             return state
     }

@@ -1,11 +1,11 @@
 import { createSelector } from 'reselect'
 import plans from 'helpers/enums/plans'
 
-const getlenders = (state) => state.lenders
+const getLenders = (state) => state.lenders
 const getSpecialities = (state) => state.specialities.list
 
 const list_of_lenders_selector = createSelector(
-    [ getlenders, getSpecialities ],
+    [ getLenders, getSpecialities ],
     (lenders, specialities) => {
         /*
         * Nombre
@@ -27,16 +27,15 @@ const list_of_lenders_selector = createSelector(
             }
         })
 
-        const specialitiesList = [{value:0, label:'Especialidad'}, ...specialities.map(sp => ({value: sp.id, label: sp.name}))]
-
-        const plansList = ['Plan', ...Object.values(plans)]
+        const specialitiesList = specialities.map(sp => ({value: sp.id, label: sp.name}))
+        const plansList = Object.values(plans)
 
         if (lenders.filter.name) {
             lendersToShow = lendersToShow.filter(lender => lender.name.toLowerCase().includes(lenders.filter.name.toLowerCase()))
         }
 
         if (lenders.filter.speciality) {
-            const specialityFiltered = specialities.filter(sp => sp.id == lenders.filter.speciality)[0].name
+            const specialityFiltered = specialities.filter(sp => sp.id.toString() === lenders.filter.speciality)[0].name
             lendersToShow = lendersToShow.filter(lender => lender.specialities.indexOf(specialityFiltered) >= 0)
         }
 

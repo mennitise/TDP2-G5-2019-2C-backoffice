@@ -17,6 +17,18 @@
     padding-left: .5em;
 }
 
+.items-title-status {
+    font-size: 20px;
+}
+
+.items-field-status {
+    font-size: 18px;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    padding-left: .5em;
+    padding-right: .5em;
+}
+
 .card-container {
     padding-left: 2%;
     padding-right: 2%;
@@ -32,8 +44,19 @@
     justify-content: space-around;
 }
 
+.btn-primary {
+    background-color: #FF5722;
+    border-color: #FF5722;
+}
+
 .modify-button-card {
     background-color: #FF5722;
     border-color: #FF5722;
+    color: #FFFFFF;
+}
+
+.modify-button-card:hover {
+    background-color: #BB5022;
+    border-color: #BB5022;
     color: #FFFFFF;
 }

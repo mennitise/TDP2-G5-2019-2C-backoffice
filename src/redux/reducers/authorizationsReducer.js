@@ -1,5 +1,4 @@
 import t from '../actions/actionTypes'
-import authorizationsActions from "../actions/authorizationsActions"
 
 let defaultState = {
 	list: [],
@@ -7,7 +6,7 @@ let defaultState = {
 	filter: {
 		name: '',
 		speciality: '',
-		plan: '',
+		status: 1,
 	}
 }
 
@@ -31,12 +30,12 @@ function filterBySpeciality(state, action) {
 	}
 }
 
-function filterByPlan(state, action) {
+function filterByStatus(state, action) {
 	return {
 		...state,
 		filter: {
 			...state.filter,
-			plan: action.plan,
+			status: action.status,
 		},
 	}
 }
@@ -62,6 +61,17 @@ function authorizationDetailedInitialized(state, action) {
 	}
 }
 
+function clearFilters(state) {
+	return {
+		...state,
+		filter: {
+			name: '',
+			speciality: '',
+			status: 1,
+		}
+	}
+}
+
 const lendersReducer = (state = defaultState, action) => {
 	switch(action.type) {
 		case t.AUTHORIZATIONS_GET_AUTHORIZATIONS_SUCCESS:
@@ -70,12 +80,14 @@ const lendersReducer = (state = defaultState, action) => {
 			return filterByName(state, action)
 		case t.AUTHORIZATIONS_FILTERING_BY_SPECIALITY:
 			return filterBySpeciality(state, action)
-		case t.AUTHORIZATIONS_FILTERING_BY_PLAN:
-			return filterByPlan(state, action)
+		case t.AUTHORIZATIONS_FILTERING_BY_STATUS:
+			return filterByStatus(state, action)
 		case t.AUTHORIZATIONS_AUTHORIZATION_SELECTED:
 			return authorizationSelected(state, action)
 		case t.AUTHORIZATIONS_AUTHORIZATION_DETAILS_ROUTE_INITIALIZE:
 			return authorizationDetailedInitialized(state, action)
+		case t.AUTHORIZATIONS_ROUTE_INITIALIZE:
+			return clearFilters(state)
 		default:
 			return state
 	}

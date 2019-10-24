@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import translations from 'helpers/enums/translations'
 import './lenderForm.css'
 import {Button, Form} from "react-bootstrap"
@@ -34,14 +33,11 @@ class LenderForm extends PureComponent {
 		return (
 			<Form noValidate validated={this.state.validated} className='add-lender-form' onSubmit={handleSubmit}>
 				<h2 className='new-lender'>Alta de Prestador</h2>
-
-
 				<Form.Group className='form-group' controlId="formName">
 					<Form.Label>Nombre</Form.Label>
 					<Form.Control required type="string" onChange={this.props.onNameChange} placeholder={`${translations.SPANISH.enter} nombre`} />
 					<Form.Control.Feedback className='error-message' type="invalid"> Nombre inválido </Form.Control.Feedback>
 				</Form.Group>
-
 
 				<Form.Group className='form-group' controlId="formSpecialities">
 					<Form.Label>Especialidades</Form.Label>
@@ -63,7 +59,6 @@ class LenderForm extends PureComponent {
 					</div>
 				</Form.Group>
 
-
 				<Form.Group className='form-group' controlId="formTypes">
 					<Form.Label>Tipo</Form.Label>
 					<Form.Control required as="select" onChange={this.props.onTypeChange} >
@@ -75,7 +70,6 @@ class LenderForm extends PureComponent {
 					<Form.Control.Feedback className='error-message' type="invalid">Tipo inválido</Form.Control.Feedback>
 				</Form.Group>
 
-
 				<Form.Group className='form-group' controlId="formPlan">
 					<Form.Label>Plan de cobertura inicial</Form.Label>
 					<Form.Control required as="select" value={this.props.planSelected} onChange={this.props.onPlanChange} >
@@ -86,7 +80,6 @@ class LenderForm extends PureComponent {
 					</Form.Control>
 					<Form.Control.Feedback className='error-message' type="invalid">Plan inválido</Form.Control.Feedback>
 				</Form.Group>
-
 
 				<Form.Group className='form-group' controlId='formLanguages'>
 					<Form.Label>Idiomas</Form.Label>
@@ -108,12 +101,11 @@ class LenderForm extends PureComponent {
 					}
 				</Form.Group>
 
-
 				<Form.Group className='form-group' controlId='formEmails'>
 					<div className='email-wrapper' onClick={this.props.addLenderHandler}>
 						<Form.Label className='add-email-left'>Emails</Form.Label>
 						<div className='add-email-right' onClick={this.props.addEmail}>
-							<img className='add-email-img' src={add}/>
+							<img className='add-email-img' src={add} alt='+'/>
 							<h5 className='add-email-text'>Agregar email</h5>
 						</div>
 					</div>
@@ -129,12 +121,11 @@ class LenderForm extends PureComponent {
 					))}
 				</Form.Group>
 
-
 				<Form.Group className='form-group' controlId='formLocation'>
 					<div className='email-wrapper' onClick={this.props.addLenderHandler}>
 						<Form.Label  className='add-email-left'>Direcciones y teléfonos</Form.Label>
 						<div className='add-email-right' onClick={this.props.addAddress}>
-							<img className='add-email-img' src={add}/>
+							<img className='add-email-img' src={add} alt='+'/>
 							<h5 className='add-email-text'>Agregar dirección</h5>
 						</div>
 					</div>
@@ -198,6 +189,7 @@ class LenderForm extends PureComponent {
 										width={this.props.mapWidth}
 										height={this.props.mapHeight}
 										id="gmap_canvas"
+										title='gmap'
 										src={`https://maps.google.com/maps?q=${address.latitude},${address.longitude}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
 										frameBorder="0"
 										scrolling="no"
@@ -210,7 +202,6 @@ class LenderForm extends PureComponent {
 						</div>
 					))}
 				</Form.Group>
-
 
 				<div className='form-login-submit' >
 					<Button className='button-submit' variant="primary" type="submit">

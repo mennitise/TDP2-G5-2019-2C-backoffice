@@ -1,35 +1,30 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
+import authorizationStatus from "helpers/enums/authorizationStatus"
+
 import {Card} from "react-bootstrap"
-import Button from "react-bootstrap/Button"
-import placeholder from 'assets/images/placeholder.jpg'
 
 class AuthCard extends PureComponent {
 	render() {
 		return (
-			<div className='list-lender'>
-				<Card>
+			<div className='list-auth' onClick={() => { this.props.authSelectedHandler(this.props.authId) }}>
+				<Card className='list-auth-card'>
 					<Card.Header as='h4'><b>{this.props.name}</b></Card.Header>
 					<Card.Body>
 						<div className='card-container'>
 							<div className='auth-field'>
 								<p className='items-title'>Especialidad:</p>
-								<p className='items-field'>{ this.props.speciality }</p>
+								<p className='items-field'>{this.props.speciality}</p>
 							</div>
 							<div className='auth-field'>
 								<p className='items-title'>Plan de cobertura inicial:</p>
 								<p className='items-field'>{this.props.plan}</p>
 							</div>
-							<img className='auth-img' src={this.props.imgUrl} />
+							<img className='auth-img' src={this.props.imgUrl} alt=''/>
 							<div className='auth-field'>
 								<p className='items-title'>Estado de la Autorización:</p>
-								<p className='items-field'>{this.props.status}</p>
-							</div>
-						</div>
-						<div className='card-buttons'>
-							<div className='card-buttons-size'>
-								<Button className='modify-button-card' variant="primary" onClick={() => { this.props.authSelectedHandler(this.props.authId) }}>Modificar estado</Button>
+								<p className='items-field'>{authorizationStatus[this.props.status]}</p>
 							</div>
 						</div>
 					</Card.Body>
@@ -41,7 +36,7 @@ class AuthCard extends PureComponent {
 }
 
 AuthCard.defaultProps = {
-	authId: '0',
+	authId: 0,
 	name: '',
 	speciality: [],
 	type: '',
@@ -51,7 +46,7 @@ AuthCard.defaultProps = {
 }
 
 AuthCard.propTypes = {
-	authId: PropTypes.string,
+	authId: PropTypes.number,
 	name: PropTypes.string,
 	speciality: PropTypes.string,
 	type: PropTypes.string,

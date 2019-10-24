@@ -15,7 +15,6 @@ class App extends Component {
 		super(props)
 		window.addEventListener('resize', ()=>this.props.dispatch(generalActions.windowResize(window.innerWidth, window.innerHeight)))
 		this.props.dispatch(generalActions.appInitialize(window.innerWidth, window.innerHeight/*, platform, window.top !== window.self*/))
-
 	}
 
 	render() {

@@ -20,10 +20,10 @@ const authorizationsActions = {
 			name,
 		}
 	},
-	filteringByPlan: function(plan) {
+	filteringByStatus: function(status) {
 		return {
-			type: actionTypes.AUTHORIZATIONS_FILTERING_BY_PLAN,
-			plan,
+			type: actionTypes.AUTHORIZATIONS_FILTERING_BY_STATUS,
+			status,
 		}
 	},
 	filteringBySpeciality: function(speciality) {

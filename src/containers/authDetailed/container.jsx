@@ -1,10 +1,9 @@
-import React, {Fragment, PureComponent} from 'react'
+import React, {PureComponent} from 'react'
 import { connect } from 'react-redux'
 import bindActionsToDispatch from 'helpers/bindActionsToDispatch'
 
 import generalActions from "redux/actions/generalActions"
 import AuthDetailed from 'views/authDetailed/authDetailed'
-
 
 import { authorizationsSelectors } from 'redux/selectors'
 

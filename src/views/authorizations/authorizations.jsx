@@ -1,13 +1,10 @@
 import React, {PureComponent} from 'react'
 
 import './authorizations.css'
-import add from 'assets/images/add.svg'
 import search from 'assets/images/search.svg'
 
 import Paginated from "components/paginated/paginated.jsx"
 import { Form } from "react-bootstrap"
-import PropTypes from "prop-types"
-import placeholder from 'assets/images/placeholder.jpg'
 import AuthCard from 'components/authCard/authCard'
 
 class Authorizations extends PureComponent {
@@ -22,8 +19,7 @@ class Authorizations extends PureComponent {
 	}
 
 	updatePages() {
-		if (this.props.listOfAuthorizations && this.state.numberOfResults !== this.props.listOfAuthorizations.length) {
-
+		if (this.props.listOfAuthorizations) {
 			const pages = this.chunk(this.props.listOfAuthorizations, 6)
 			const pageSelected = (pages.length > 0) ? 1 : 0
 			this.setState({
@@ -40,7 +36,9 @@ class Authorizations extends PureComponent {
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		this.updatePages()
+		if (this.props.listOfAuthorizations && prevProps.listOfAuthorizations !== this.props.listOfAuthorizations) {
+			this.updatePages()
+		}
 	}
 
 	chunk = (arr, len) => {
@@ -59,8 +57,8 @@ class Authorizations extends PureComponent {
 		this.props.filterBySpeciality(ev.target.value)
 	}
 
-	onChangeFilterPlan = ev => {
-		this.props.filterByPlan(ev.target.value)
+	onChangeFilterStatus = ev => {
+		this.props.filterByStatus(ev.target.value)
 	}
 
 	pageSelected = (page) => {
@@ -98,22 +96,17 @@ class Authorizations extends PureComponent {
 					<div className='list-wrapper'>
 						<h2 className='top-title add-lender-left'>Autorizaciones</h2>
 						<div className='filters'>
-							<img className='filters-img' src={search}/>
+							<img className='filters-img' src={search} alt='Search'/>
 							<Form.Control required className='filters-name' type="string" onChange={this.onChangeFilterName} placeholder={`Nombre`} />
 							<div className='filters-speciality'>
 								<Form.Control required as="select" onChange={this.onChangeFilterSpeciality} >
-									{this.props.specialities.map((t, i) => {
-										if (i===0) return (<option key={`type-${i}`} value='' disabled selected hidden >{t.label}</option>)
-										return (<option key={`type-${i}`} value={i}>{t.label}</option>)
-									})}
+									<option key='placeholder' value='-1' hidden >Especialidad</option>
+									{this.props.specialities.map((t, i) => (<option key={`type-${i+1}`} value={i+1}>{t.label}</option>))}
 								</Form.Control>
 							</div>
 							<div className='filters-plan'>
-								<Form.Control required as="select" onChange={this.onChangeFilterPlan} >
-									{this.props.plans.map((t, i) => {
-										if (i===0) return (<option key={`type-${i}`} value='' disabled selected hidden >{t}</option>)
-										return (<option key={`type-${i}`} value={i}>{t}</option>)
-									})}
+								<Form.Control required as="select" onChange={this.onChangeFilterStatus} >
+									{this.props.status.map((t, i) => (<option key={`type-${i+1}`} value={i+1}>{t}</option>))}
 								</Form.Control>
 							</div>
 						</div>

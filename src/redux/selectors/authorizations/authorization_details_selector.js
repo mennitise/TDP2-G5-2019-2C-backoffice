@@ -7,8 +7,20 @@ const getAuthorizations = (state) => state.authorizations
 const authorization_details_selector = createSelector(
 	[ getAuthorizations ],
 	(authorizations) => {
+		const authorizationSelected = authorizations.list.filter(auth => auth.id.toString() === authorizations.selected)[0]
+		let authorizationToShow
+		if (authorizationSelected) {
+			authorizationToShow = {
+				id: authorizationSelected.id,
+				name: `${authorizationSelected.affiliate.firstname} ${authorizationSelected.affiliate.lastname}`,
+				speciality: authorizationSelected.specialty.name,
+				specialityId: authorizationSelected.specialtyId,
+				plan: 'A210',
+				status: authorizationSelected.status,
+				imgUrl: authorizationSelected.url,
+			}
+		}
 
-		const authorizationToShow = authorizations.list.filter(auth => auth.id == authorizations.selected)[0]
 		const statuses = [...Object.values(authorizationStatus)]
 
 		return {

@@ -51,7 +51,7 @@ class LenderCard extends PureComponent {
 						<div className='card-buttons'>
 							<div className='card-buttons-size'>
 								<Button className='modify-button-card' variant="primary">Modificar</Button>
-								<Button className='button-card' variant="secondary">Borrar</Button>
+								<Button className='button-card' variant="secondary" onClick={() => {this.props.deleteHandler(this.props.id)} } >Borrar</Button>
 							</div>
 						</div>
 					</Card.Body>
@@ -82,6 +82,7 @@ LenderCard.propTypes = {
 		phone: PropTypes.string
 	})),
 	email: PropTypes.arrayOf(PropTypes.string),
+	deleteHandler: PropTypes.func.isRequired,
 }
 
 export default LenderCard

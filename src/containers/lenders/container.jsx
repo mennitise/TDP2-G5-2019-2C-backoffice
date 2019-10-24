@@ -23,6 +23,7 @@ class LendersContainer extends PureComponent {
                 filterByName={this.props.actions.filteringByName}
                 filterBySpeciality={this.props.actions.filteringBySpeciality}
                 filterByPlan={this.props.actions.filteringByPlan}
+                deleteLenderHandler={this.props.actions.deleteLender}
             />
         )
     }
@@ -39,6 +40,7 @@ function mapDispatchToProps(dispatch) {
         filteringByName: lenderActions.filteringByName,
         filteringByPlan: lenderActions.filteringByPlan,
         filteringBySpeciality: lenderActions.filteringBySpeciality,
+        deleteLender: lenderActions.deleteLender,
     }, dispatch)
 }
 

@@ -1,8 +1,4 @@
 import React, {PureComponent} from 'react'
-import {Button, Form} from "react-bootstrap";
-
-
-import Select from 'react-select';
 import LenderForm from 'components/lenderForm/lenderForm'
 
 class AddLender extends PureComponent {

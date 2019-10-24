@@ -18,10 +18,10 @@ class AuthorizationsContainer extends PureComponent {
 			<Authorizations
 				listOfAuthorizations={this.props.authorizations}
 				specialities={this.props.specialities}
-				plans={this.props.plans}
+				status={this.props.status}
 				filterByName={this.props.actions.filteringByName}
 				filterBySpeciality={this.props.actions.filteringBySpeciality}
-				filterByPlan={this.props.actions.filteringByPlan}
+				filterByStatus={this.props.actions.filteringByStatus}
 				authSelectedHandler={this.props.actions.authSelectedHandler}
 			/>
 		)
@@ -37,7 +37,7 @@ function mapDispatchToProps(dispatch) {
 		initializeRoute: generalActions.authorizationsRouteInitialize,
 		authSelectedHandler: authorizationsActions.authorizationSelected,
 		filteringByName: authorizationsActions.filteringByName,
-		filteringByPlan: authorizationsActions.filteringByPlan,
+		filteringByStatus: authorizationsActions.filteringByStatus,
 		filteringBySpeciality: authorizationsActions.filteringBySpeciality,
 	}, dispatch)
 }
