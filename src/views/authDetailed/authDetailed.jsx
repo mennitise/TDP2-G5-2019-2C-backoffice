@@ -28,8 +28,18 @@ class AuthDetailed extends PureComponent {
 	onChangeStatus = status => {
 		this.setState({
 			...this.state,
-			status: status.target.value
+			status: Object.keys(authorizationStatus)[status.target.value]
 		})
+	}
+
+	changeAuthorizationStatusHandler = () => {
+		const cases = {}
+		cases[Object.keys(authorizationStatus)[0]] = null//authorizationsActions.pendingAuthorization // In case of need return to pending
+		cases[Object.keys(authorizationStatus)[1]] = this.props.authorizeAuthorizationHandler
+		cases[Object.keys(authorizationStatus)[2]] = this.props.rejectAuthorizationHandler
+		cases[Object.keys(authorizationStatus)[3]] = this.props.needMoreInformationHandler
+		const neededAction = cases[this.state.status]
+		if (neededAction) neededAction(this.props.authorization.id)
 	}
 
 	render() {
@@ -65,6 +75,7 @@ class AuthDetailed extends PureComponent {
 								<div className='items-field-status'>
 									<Form.Control required as="select" onChange={this.onChangeStatus} >
 										{this.props.statuses.map((t, i) => {
+											if (i === 0) return (<option selected hidden key={`type-${i}`} value={i}>{t}</option>)
 											if (authorizationStatus[this.state.status] === t) return (<option selected key={`type-${i}`} value={i}>{t}</option>)
 											return (<option key={`type-${i}`} value={i}>{t}</option>)
 										})}
@@ -76,7 +87,7 @@ class AuthDetailed extends PureComponent {
 				}
 				<div className='card-buttons'>
 					<div className='card-buttons-size'>
-						<Button className='modify-button-card' variant="primary" onClick={() => { console.log(`Autorización ${this.props.authorization.id} se guarda en estado: ${this.state.status}`) }}>Guardar</Button>
+						<Button className='modify-button-card' variant="primary" onClick={() => { this.changeAuthorizationStatusHandler() }}>Guardar</Button>
 					</div>
 				</div>
 			</div>

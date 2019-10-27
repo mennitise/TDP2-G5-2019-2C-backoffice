@@ -126,6 +126,48 @@ function* deleteLender(action) {
 	}
 }
 
+function* authorizeAuthorization(action) {
+	try {
+		yield fetch(baseURL + 'authorizations/authorize/' + action.id, {
+			method: 'POST',
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		})
+		yield put(authorizationsActions.authorizeAuthorizationSuccessful(action.id))
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+function* rejectAuthorization(action) {
+	try {
+		yield fetch(baseURL + 'authorizations/reject/' + action.id, {
+			method: 'POST',
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		})
+		yield put(authorizationsActions.rejectAuthorizationSuccessful(action.id))
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+function* needMoreInformationAuthorization(action) {
+	try {
+		yield fetch(baseURL + 'authorizations/need-information/' + action.id, {
+			method: 'POST',
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		})
+		yield put(authorizationsActions.needMoreInformationAuthorizationSuccessful(action.id))
+	} catch (error) {
+		console.log(error)
+	}
+}
+
 // Redirections
 
 function* redirectToAddNewLender(action) {
@@ -154,7 +196,12 @@ export default function* rootSaga() {
 		yield takeEvery(actionTypes.LENDER_ADD_NEW_LENDER_SELECTED, redirectToAddNewLender),
         yield takeEvery(actionTypes.SIDEBAR_DASHBOARD_SELECTED, goToDashboard),
 		yield takeEvery([actionTypes.SIDEBAR_LENDERS_SELECTED, actionTypes.LENDER_SAVE_NEW_LENDER_SUCCESSFUL], goToLenders),
-		yield takeEvery(actionTypes.SIDEBAR_AUTHORIZATIONS_SELECTED, goToAuthorizations),
+		yield takeEvery([
+			actionTypes.SIDEBAR_AUTHORIZATIONS_SELECTED,
+			actionTypes.AUTHORIZATIONS_AUTHORIZATION_AUTHORIZED_SUCCESSFUL,
+			actionTypes.AUTHORIZATIONS_AUTHORIZATION_REJECTED_SUCCESSFUL,
+			actionTypes.AUTHORIZATIONS_AUTHORIZATION_NEED_MORE_INFORMATION_SUCCESSFUL,
+		], goToAuthorizations),
         yield takeEvery(actionTypes.AUTHORIZATIONS_AUTHORIZATION_SELECTED, goToAuthorizationDetails),
 
         // Sync
@@ -162,8 +209,14 @@ export default function* rootSaga() {
 		yield takeLatest(actionTypes.APP_INITIALIZE, getSpecialities),
 		yield takeLatest(actionTypes.APP_INITIALIZE, getZones),
 		yield takeEvery([actionTypes.LENDERS_ROUTE_INITIALIZE, actionTypes.LENDER_DELETE_LENDER_SUCCESS], getLenders),
-		yield takeEvery([actionTypes.AUTHORIZATIONS_ROUTE_INITIALIZE, actionTypes.AUTHORIZATIONS_AUTHORIZATION_DETAILS_ROUTE_INITIALIZE], getAuthorizations),
+		yield takeEvery([
+			actionTypes.AUTHORIZATIONS_ROUTE_INITIALIZE,
+			actionTypes.AUTHORIZATIONS_AUTHORIZATION_DETAILS_ROUTE_INITIALIZE,
+		], getAuthorizations),
 		yield takeEvery(actionTypes.LENDER_SAVE_NEW_LENDER_SELECTED, saveNewLender),
 		yield takeLatest(actionTypes.LENDER_DELETE_LENDER, deleteLender),
+		yield takeLatest(actionTypes.AUTHORIZATIONS_AUTHORIZATION_AUTHORIZED, authorizeAuthorization),
+		yield takeLatest(actionTypes.AUTHORIZATIONS_AUTHORIZATION_REJECTED, rejectAuthorization),
+		yield takeLatest(actionTypes.AUTHORIZATIONS_AUTHORIZATION_NEED_MORE_INFORMATION, needMoreInformationAuthorization),
 	])
 }

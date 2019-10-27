@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import bindActionsToDispatch from 'helpers/bindActionsToDispatch'
 
 import generalActions from "redux/actions/generalActions"
-import AuthDetailed from 'views/authDetailed/authDetailed'
+import authorizationsActions from "redux/actions/authorizationsActions"
 
+import AuthDetailed from 'views/authDetailed/authDetailed'
 import { authorizationsSelectors } from 'redux/selectors'
 
 class AuthorizationDetailedContainer extends PureComponent {
@@ -19,6 +20,9 @@ class AuthorizationDetailedContainer extends PureComponent {
 			<AuthDetailed
 				authorization={this.props.authorization}
 				statuses={this.props.statuses}
+				authorizeAuthorizationHandler={this.props.actions.authorizeAuthorizationHandler}
+				rejectAuthorizationHandler={this.props.actions.rejectAuthorizationHandler}
+				needMoreInformationHandler={this.props.actions.needMoreInformationHandler}
 			/>
 		)
 	}
@@ -31,6 +35,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return bindActionsToDispatch({
 		initializeRoute: generalActions.authorizationDetailsRouteInitialize,
+		rejectAuthorizationHandler: authorizationsActions.rejectAuthorization,
+		authorizeAuthorizationHandler: authorizationsActions.authorizeAuthorization,
+		needMoreInformationHandler: authorizationsActions.needMoreInformationAuthorization,
 	}, dispatch)
 }
 

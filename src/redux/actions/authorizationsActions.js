@@ -32,6 +32,42 @@ const authorizationsActions = {
 			speciality,
 		}
 	},
+	authorizeAuthorization: function(id) {
+		return {
+			type: actionTypes.AUTHORIZATIONS_AUTHORIZATION_AUTHORIZED,
+			id,
+		}
+	},
+	authorizeAuthorizationSuccessful: function(id) {
+		return {
+			type: actionTypes.AUTHORIZATIONS_AUTHORIZATION_AUTHORIZED_SUCCESSFUL,
+			id,
+		}
+	},
+	rejectAuthorization: function(id) {
+		return {
+			type: actionTypes.AUTHORIZATIONS_AUTHORIZATION_REJECTED,
+			id
+		}
+	},
+	rejectAuthorizationSuccessful: function(id) {
+		return {
+			type: actionTypes.AUTHORIZATIONS_AUTHORIZATION_REJECTED_SUCCESSFUL,
+			id
+		}
+	},
+	needMoreInformationAuthorization: function(id) {
+		return {
+			type: actionTypes.AUTHORIZATIONS_NEED_MORE_INFORMATION,
+			id
+		}
+	},
+	needMoreInformationAuthorizationSuccessful: function(id) {
+		return {
+			type: actionTypes.AUTHORIZATIONS_NEED_MORE_INFORMATION_SUCCESSFUL,
+			id
+		}
+	}
 }
 
 export default authorizationsActions
