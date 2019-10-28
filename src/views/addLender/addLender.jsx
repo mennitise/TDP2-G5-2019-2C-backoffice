@@ -200,6 +200,8 @@ class AddLender extends PureComponent {
 					onZoneChange={this.onZoneChange}
 					onLatitudeChange={this.onLatitudeChange}
 					onLongitudeChange={this.onLongitudeChange}
+					mapWidth={this.props.mapWidth}
+					mapHeight={this.props.mapHeight}
 
 					saveLenderHandler={this.saveLenderHandler}
 					addAddress={this.addAddress}
