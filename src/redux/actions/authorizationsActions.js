@@ -58,13 +58,13 @@ const authorizationsActions = {
 	},
 	needMoreInformationAuthorization: function(id) {
 		return {
-			type: actionTypes.AUTHORIZATIONS_NEED_MORE_INFORMATION,
+			type: actionTypes.AUTHORIZATIONS_AUTHORIZATION_NEED_MORE_INFORMATION,
 			id
 		}
 	},
 	needMoreInformationAuthorizationSuccessful: function(id) {
 		return {
-			type: actionTypes.AUTHORIZATIONS_NEED_MORE_INFORMATION_SUCCESSFUL,
+			type: actionTypes.AUTHORIZATIONS_AUTHORIZATION_NEED_MORE_INFORMATION_SUCCESSFUL,
 			id
 		}
 	}
