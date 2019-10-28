@@ -105,7 +105,7 @@ class Authorizations extends PureComponent {
 								<Form.Control required as="select" onChange={this.onChangeFilterSpeciality} >
 									<option key='placeholder' value='-1' hidden >Especialidad</option>
 									<option key='all' value='ALL' >TODAS</option>
-									{this.props.specialities.map((t, i) => (<option key={`type-${i+1}`} value={i+1}>{t.label}</option>))}
+									{this.props.specialities.map((t, i) => (<option key={`type-${i+1}`} value={t.value}>{t.label}</option>))}
 								</Form.Control>
 							</div>
 							<div className='filters-plan'>
