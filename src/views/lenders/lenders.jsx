@@ -51,7 +51,9 @@ class Lenders extends PureComponent {
 	}
 
 	onChangeFilterSpeciality = ev => {
-		this.props.filterBySpeciality(ev.target.value)
+		let filter = ''
+		if (ev.target.value !== 'ALL') filter = ev.target.value
+		this.props.filterBySpeciality(filter)
 	}
 
 	onChangeFilterPlan = ev => {
@@ -124,6 +126,7 @@ class Lenders extends PureComponent {
 							<div className='filters-speciality'>
 								<Form.Control required as="select" onChange={this.onChangeFilterSpeciality} >
 									<option key='placeholder' value='-1' hidden>Especialidad</option>
+									<option key='placeholder' value='ALL'>TODAS</option>
 									{this.props.specialities.map((t, i) => (<option key={`type-${i+1}`} value={i+1}>{t.label}</option>))}
 								</Form.Control>
 							</div>
