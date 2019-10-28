@@ -21,7 +21,7 @@ const list_of_authorizations_selector = createSelector(
 			name: `${auth.affiliate.firstname} ${auth.affiliate.lastname}`,
 			speciality: auth.specialty.name,
 			specialityId: auth.specialtyId,
-			plan: auth.plan,
+			plan: auth.affiliate.plan,
 			status: auth.status,
 			imgUrl: auth.url,
 			createdAt: auth.createdAt,
