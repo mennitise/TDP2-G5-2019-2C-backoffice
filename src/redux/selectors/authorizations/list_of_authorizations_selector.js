@@ -4,6 +4,14 @@ import status from 'helpers/enums/authorizationStatus'
 const getAuthorizations = (state) => state.authorizations
 const getSpecialities = (state) => state.specialities.list
 
+const sortByDate = (a, b) => {
+	const x = a.createdAt.toLowerCase()
+	const y = b.createdAt.toLowerCase()
+	if (x < y) {return -1}
+	if (x > y) {return 1}
+	return 0
+}
+
 const list_of_authorizations_selector = createSelector(
 	[ getAuthorizations, getSpecialities ],
 	(authorizations, specialities) => {
@@ -13,9 +21,10 @@ const list_of_authorizations_selector = createSelector(
 			name: `${auth.affiliate.firstname} ${auth.affiliate.lastname}`,
 			speciality: auth.specialty.name,
 			specialityId: auth.specialtyId,
-			plan: 'A210',
+			plan: auth.plan,
 			status: auth.status,
 			imgUrl: auth.url,
+			createdAt: auth.createdAt,
 		}))
 
 		const specialitiesList = specialities.map(sp => ({value: sp.id, label: sp.name}))
@@ -30,7 +39,18 @@ const list_of_authorizations_selector = createSelector(
 		}
 
 		if (authorizations.filter.status) {
-			authorizationsToShow = authorizationsToShow.filter(auth => auth.status === Object.keys(status)[authorizations.filter.status - 1])
+			authorizationsToShow = authorizationsToShow.filter(auth => auth.status === Object.keys(status)[authorizations.filter.status - 1]).sort(sortByDate)
+		} else {
+			authorizationsToShow = [
+				...authorizationsToShow.filter(auth => auth.status === Object.keys(status)[0]).sort(sortByDate),
+				...authorizationsToShow.filter(auth => {
+						return (
+							auth.status !== Object.keys(status)[0] &&
+							Object.keys(status).includes(auth.status)
+						)
+					}
+				),
+			]
 		}
 
 		return {

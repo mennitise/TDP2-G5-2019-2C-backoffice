@@ -58,7 +58,8 @@ class Authorizations extends PureComponent {
 	}
 
 	onChangeFilterStatus = ev => {
-		this.props.filterByStatus(ev.target.value)
+		if(ev.target.value === 'ALL') this.props.filterByStatus('')
+		else this.props.filterByStatus(ev.target.value)
 	}
 
 	pageSelected = (page) => {
@@ -107,6 +108,7 @@ class Authorizations extends PureComponent {
 							<div className='filters-plan'>
 								<Form.Control required as="select" onChange={this.onChangeFilterStatus} >
 									{this.props.status.map((t, i) => (<option key={`type-${i+1}`} value={i+1}>{t}</option>))}
+									<option key={`type-${this.props.status.length + 1}`} value={'ALL'}>{'Todos'}</option>
 								</Form.Control>
 							</div>
 						</div>
