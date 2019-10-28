@@ -15,7 +15,7 @@ const authorization_details_selector = createSelector(
 				name: `${authorizationSelected.affiliate.firstname} ${authorizationSelected.affiliate.lastname}`,
 				speciality: authorizationSelected.specialty.name,
 				specialityId: authorizationSelected.specialtyId,
-				plan: 'A210',
+				plan: authorizationSelected.affiliate.plan,
 				status: authorizationSelected.status,
 				imgUrl: authorizationSelected.url,
 			}

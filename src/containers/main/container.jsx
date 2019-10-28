@@ -14,6 +14,7 @@ import sidebarActions from "redux/actions/sidebarActions"
 import logo from "assets/images/login_logo.png"
 import dashLogo from 'assets/images/dash.svg'
 import docLogo from 'assets/images/doctor.svg'
+import authLogo from 'assets/images/authorizations.svg'
 
 class MainContainer extends PureComponent {
 
@@ -51,7 +52,7 @@ class MainContainer extends PureComponent {
 						</li>
 						<li onClick={this.ordersHandler}>
 							<div className='sidebar-logo-list'>
-								<img src={dashLogo} className='sidebar-logo-option' alt="logo" />
+								<img src={authLogo} className='sidebar-logo-option' alt="logo" />
 								<p className='sidebar-logo-label'>Autorizaciones</p>
 							</div>
 						</li>
