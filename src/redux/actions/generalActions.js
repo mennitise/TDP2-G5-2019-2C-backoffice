@@ -25,9 +25,15 @@ const generalActions = {
             type: actionTypes.AUTHORIZATIONS_ROUTE_INITIALIZE,
         }
     },
-    authorizationDetailsRouteInitialize: function(id){
+    authorizationDetailsRouteInitialize: function(id) {
         return {
             type: actionTypes.AUTHORIZATIONS_AUTHORIZATION_DETAILS_ROUTE_INITIALIZE,
+            id,
+        }
+    },
+    modifyLenderInitialize: function(id) {
+        return {
+            type: actionTypes.LENDERS_MODIFY_LENDER_ROUTE_INITIALIZE,
             id,
         }
     }

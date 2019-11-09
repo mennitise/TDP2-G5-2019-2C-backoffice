@@ -12,6 +12,18 @@ const lenderActions = {
 			lenderData
 		}
 	},
+	modifyLender: function(id) {
+		return {
+			type: actionTypes.LENDER_MODIFY_LENDER,
+			id,
+		}
+	},
+	modifyLenderSave: function(lenderData) {
+		return {
+			type: actionTypes.LENDER_MODIFY_LENDER_SAVE,
+			lenderData,
+		}
+	},
 	getLendersSuccess: function (lenders) {
 		return {
 			type: actionTypes.LENDERS_GET_LENDERS_SUCCESS,

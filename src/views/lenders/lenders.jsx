@@ -101,6 +101,10 @@ class Lenders extends PureComponent {
 		window.scrollTo(0, 0)
 	}
 
+	handleModify = (id) => {
+		this.props.modifyLenderHandler(id)
+	}
+
     render() {
 		return(
 			<div className='wrapper-lenders'>
@@ -113,9 +117,9 @@ class Lenders extends PureComponent {
 				/>
 				<div className='list'>
 					<div className='list-wrapper'>
-						<div className='top-title' onClick={this.addLenderHandler}>
+						<div className='top-title'>
 							<h2 className='add-lender-left'>Prestadores</h2>
-							<div className='add-lender-right'>
+							<div className='add-lender-right' onClick={this.addLenderHandler}>
 								<img className='add-lender-img' src={add} alt='+'/>
 								<h5 className='add-lender-text'>Agregar prestador</h5>
 							</div>
@@ -152,6 +156,7 @@ class Lenders extends PureComponent {
 											location={lender.location}
 											email={lender.email}
 											deleteHandler={this.handleShow}
+											modifyHandler={this.handleModify}
 										/>
 									)
 								})

@@ -2,6 +2,7 @@ import t from '../actions/actionTypes'
 
 let defaultState = {
     list: [],
+    selected: 0,
     filter: {
         name: '',
         speciality: '',
@@ -57,6 +58,13 @@ function clearFilters(state) {
     }
 }
 
+function selectLender(state, action) {
+    return {
+        ...state,
+        selected: action.id,
+    }
+}
+
 const lendersReducer = (state = defaultState, action) => {
     switch(action.type) {
         case t.LENDERS_GET_LENDERS_SUCCESS:
@@ -69,6 +77,8 @@ const lendersReducer = (state = defaultState, action) => {
             return filterByPlan(state, action)
         case t.LENDERS_ROUTE_INITIALIZE:
             return clearFilters(state)
+        case t.LENDERS_MODIFY_LENDER_ROUTE_INITIALIZE:
+            return selectLender(state, action)
         default:
             return state
     }

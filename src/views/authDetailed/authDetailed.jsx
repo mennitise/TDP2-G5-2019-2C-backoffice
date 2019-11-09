@@ -1,4 +1,5 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
+import translations from 'helpers/enums/translations'
 import Button from "react-bootstrap/Button"
 import { Form } from "react-bootstrap"
 import authorizationStatus from "helpers/enums/authorizationStatus"
@@ -8,7 +9,9 @@ class AuthDetailed extends PureComponent {
 	constructor(props){
 		super(props)
 		this.state = {
-			status: this.props.authorization ? this.props.authorization.status : ''
+			status: this.props.authorization ? this.props.authorization.status : '',
+			observations: '',
+			initialStatus: this.props.authorization ? this.props.authorization.status : '',
 		}
 	}
 
@@ -18,9 +21,11 @@ class AuthDetailed extends PureComponent {
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (prevProps.authorization !== this.props.authorization) {
+			const initialStatus = this.state.initialStatus ? this.state.initialStatus :this.props.authorization.status
 			this.setState({
 				...this.state,
-				status: this.props.authorization.status
+				status: this.props.authorization.status,
+				initialStatus,
 			})
 		}
 	}
@@ -28,7 +33,14 @@ class AuthDetailed extends PureComponent {
 	onChangeStatus = status => {
 		this.setState({
 			...this.state,
-			status: Object.keys(authorizationStatus)[status.target.value]
+			status: Object.keys(authorizationStatus)[status.target.value],
+		})
+	}
+
+	onChangeObservations = status => {
+		this.setState({
+			...this.state,
+			observations: status.target.value,
 		})
 	}
 
@@ -39,7 +51,7 @@ class AuthDetailed extends PureComponent {
 		cases[Object.keys(authorizationStatus)[2]] = this.props.rejectAuthorizationHandler
 		cases[Object.keys(authorizationStatus)[3]] = this.props.needMoreInformationHandler
 		const neededAction = cases[this.state.status]
-		if (neededAction) neededAction(this.props.authorization.id)
+		if (neededAction) neededAction(this.props.authorization.id, this.state.observations)
 	}
 
 	render() {
@@ -81,6 +93,21 @@ class AuthDetailed extends PureComponent {
 										})}
 									</Form.Control>
 								</div>
+									<Fragment>
+										<p className='items-title-status'>Observaciones:</p>
+										<div className='items-field-status'>
+											{ this.state.initialStatus === Object.keys(authorizationStatus)[0] &&
+												<Form.Control
+													required
+													as="textarea"
+													onChange={this.onChangeObservations}
+													placeholder={`${translations.SPANISH.enter} observaciones`} />
+											}
+											{ this.state.initialStatus !== Object.keys(authorizationStatus)[0] &&
+												<p>{this.props.authorization.observations}</p>
+											}
+										</div>
+									</Fragment>
 							</div>
 						}
 					</div>

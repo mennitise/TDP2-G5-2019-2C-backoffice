@@ -32,10 +32,11 @@ const authorizationsActions = {
 			speciality,
 		}
 	},
-	authorizeAuthorization: function(id) {
+	authorizeAuthorization: function(id, observations) {
 		return {
 			type: actionTypes.AUTHORIZATIONS_AUTHORIZATION_AUTHORIZED,
 			id,
+			observations,
 		}
 	},
 	authorizeAuthorizationSuccessful: function(id) {
@@ -44,28 +45,30 @@ const authorizationsActions = {
 			id,
 		}
 	},
-	rejectAuthorization: function(id) {
+	rejectAuthorization: function(id, observations) {
 		return {
 			type: actionTypes.AUTHORIZATIONS_AUTHORIZATION_REJECTED,
-			id
+			id,
+			observations,
 		}
 	},
 	rejectAuthorizationSuccessful: function(id) {
 		return {
 			type: actionTypes.AUTHORIZATIONS_AUTHORIZATION_REJECTED_SUCCESSFUL,
-			id
+			id,
 		}
 	},
-	needMoreInformationAuthorization: function(id) {
+	needMoreInformationAuthorization: function(id, observations) {
 		return {
 			type: actionTypes.AUTHORIZATIONS_AUTHORIZATION_NEED_MORE_INFORMATION,
-			id
+			id,
+			observations,
 		}
 	},
 	needMoreInformationAuthorizationSuccessful: function(id) {
 		return {
 			type: actionTypes.AUTHORIZATIONS_AUTHORIZATION_NEED_MORE_INFORMATION_SUCCESSFUL,
-			id
+			id,
 		}
 	}
 }

@@ -6,6 +6,7 @@ import bindActionsToDispatch from 'helpers/bindActionsToDispatch'
 import RegisterContainer from "containers/register/container"
 import LendersContainer from "containers/lenders/container"
 import AddLenderContainer from "containers/addLender/container"
+import ModifyLenderContainer from 'containers/modifyLender/container'
 import AuthorizationsContainer from 'containers/authorizations/container'
 import AuthorizationDetailedContainer from 'containers/authDetailed/container'
 
@@ -61,6 +62,7 @@ class MainContainer extends PureComponent {
 				<div className='content'>
 					<Switch>
 						<Route path={`${this.props.match.path}/register`} component={RegisterContainer}/>
+						<Route path={`${this.props.match.path}/lenders/modify/:id`} component={ModifyLenderContainer}/>
 						<Route path={`${this.props.match.path}/lenders/add`} component={AddLenderContainer}/>
 						<Route path={`${this.props.match.path}/lenders`} component={LendersContainer}/>
 						<Route path={`${this.props.match.path}/authorization/:id`} component={AuthorizationDetailedContainer}/>

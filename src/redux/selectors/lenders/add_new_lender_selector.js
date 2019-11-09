@@ -13,7 +13,7 @@ const add_new_lender_selector = createSelector(
 		const types = ['Selecciona un tipo', 'Profesional', 'Sanatorio/Clínica']
 		const languages = [
 			{label: 'Español', value: 1},
-			{label: 'Inglés', value: 2}
+			{label: 'Ingles', value: 2}
 		]
 		const specialitiesToShow = specialities.map(sp => ({value: sp.id, label: sp.name}))
 		const zonesToShow = [{name: 'Selecciona una localidad', id:''}, ...zones]

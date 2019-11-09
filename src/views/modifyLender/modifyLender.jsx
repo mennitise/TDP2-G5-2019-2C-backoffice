@@ -1,19 +1,68 @@
 import React, {PureComponent} from 'react'
 import LenderForm from 'components/lenderForm/lenderForm'
 
-class AddLender extends PureComponent {
+
+class ModifyLender extends PureComponent {
 
 	constructor(props) {
 		super(props)
 		this.state = {
+			id: props.id,
 			name: '',
-			specialities: [],
+			specialities: null,
 			type: null,
-			plan: null,
-			languages: [],
-			emails: [null],
-			addresses: [{address: null, phone: null, zone: null, latitude: null, longitude: null}],
+			plan: '',
+			languages: null,
+			emails: [],
+			addresses: [],
 			validated: false,
+			loaded: false,
+		}
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+
+		if (!this.state.loaded) {
+
+			let specialitiesSelected = null
+			let languageSelected = null
+			let typeSelected = null
+
+			if (!this.state.specialties && this.props.selected && this.props.selected.specialties && this.props.specialities) {
+				specialitiesSelected = this.props.specialities
+					.filter(sp => this.props.selected.specialties.includes(sp.label))
+					.map(sp => sp.value)
+			}
+
+			if (!this.state.languages && this.props.selected && this.props.selected.languages && this.props.languages) {
+				languageSelected = this.props.languages
+					.filter(l => this.props.selected.languages.includes(l.label))
+					.map(l => l.value)
+			}
+
+			if (!this.state.type && this.props.selected && this.props.selected.type) {
+				typeSelected = (this.props.selected.type === 'PROFESIONAL') ? '1' : '2'
+			}
+
+			const plans = ['Selecciona un plan', 'A110', 'A210', 'A310']
+			const planSelected = plans.indexOf(this.props.selected.plan)
+
+			if (!this.state.name && this.props.selected.name) {
+				this.setState({
+					...this.state,
+					name: this.props.selected.name,
+					specialities: specialitiesSelected,
+					type: typeSelected,
+					plan: planSelected,
+					languages: languageSelected,
+					emails: this.props.selected.emails,
+					addresses: this.props.selected.offices.map(address => ({
+						...address,
+						latitude: address.lat,
+						longitude: address.lon,
+					})),
+				})
+			}
 		}
 	}
 
@@ -27,7 +76,7 @@ class AddLender extends PureComponent {
 	onSpecialitiesChange = sps => {
 		this.setState({
 			...this.state,
-			specialities: (sps && sps.length) ? sps.map(s => {return s.value}) : [],
+			specialities: (sps && sps.length) ? sps.map(s => s.value) : [],
 		})
 	}
 
@@ -160,16 +209,15 @@ class AddLender extends PureComponent {
 		})
 	}
 
-	saveLenderHandler = () => {
-		this.props.saveNewLenderSelectedHandler(this.state)
+	modifyLenderHandler = () => {
+		this.props.modifyLenderSelectedHandler(this.state)
 	}
 
 	render() {
-
 		return(
 			<div className='wrapper-add-lender'>
 				<LenderForm
-					title={'Alta de Prestador'}
+					title={'Modificación de prestador'}
 					name={this.state.name}
 					onNameChange={this.onNameChange}
 
@@ -202,7 +250,7 @@ class AddLender extends PureComponent {
 					mapWidth={this.props.mapWidth}
 					mapHeight={this.props.mapHeight}
 
-					saveLenderHandler={this.saveLenderHandler}
+					saveLenderHandler={this.modifyLenderHandler}
 					addAddress={this.addAddress}
 					addEmail={this.addEmail}
 				/>
@@ -211,4 +259,4 @@ class AddLender extends PureComponent {
 	}
 }
 
-export default AddLender
+export default ModifyLender

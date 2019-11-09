@@ -16,8 +16,8 @@ class LenderForm extends PureComponent {
 
 	render() {
 		const handleSubmit = event => {
-			event.preventDefault();
-			event.stopPropagation();
+			event.preventDefault()
+			event.stopPropagation()
 			const form = event.currentTarget
 
 			if (form.checkValidity()) {
@@ -30,12 +30,20 @@ class LenderForm extends PureComponent {
 			})
 		}
 
+		const specialitiesValues = (this.props.specialities && this.props.specialitiesSelected) ?
+			this.props.specialities.filter(s => this.props.specialitiesSelected.includes(s.value)) :
+			[]
+
+		const languagesValues = (this.props.languages && this.props.languagesSelected) ?
+			this.props.languages.filter(l => this.props.languagesSelected.includes(l.value)) :
+			[]
+
 		return (
 			<Form noValidate validated={this.state.validated} className='add-lender-form' onSubmit={handleSubmit}>
-				<h2 className='new-lender'>Alta de Prestador</h2>
+				<h2 className='new-lender'>{this.props.title}</h2>
 				<Form.Group className='form-group' controlId="formName">
 					<Form.Label>Nombre</Form.Label>
-					<Form.Control required type="string" onChange={this.props.onNameChange} placeholder={`${translations.SPANISH.enter} nombre`} />
+					<Form.Control required type="string" value={this.props.name} onChange={this.props.onNameChange} placeholder={`${translations.SPANISH.enter} nombre`} />
 					<Form.Control.Feedback className='error-message' type="invalid"> Nombre inválido </Form.Control.Feedback>
 				</Form.Group>
 
@@ -44,8 +52,8 @@ class LenderForm extends PureComponent {
 					<div className='add-lender-specialities'>
 						<Select
 							required
-							defaultValue={[]}
 							isMulti
+							value={specialitiesValues}
 							name="colors"
 							onChange={this.props.onSpecialitiesChange}
 							options={this.props.specialities}
@@ -54,15 +62,15 @@ class LenderForm extends PureComponent {
 							placeholder='Selecciona las especialidades'
 						/>
 						{(this.state.validated && this.props.specialitiesSelected.length <= 0) &&
-						<p className='error-message custom-error-message'>Especialidad inválida</p>
+							<p className='error-message custom-error-message'>Especialidad inválida</p>
 						}
 					</div>
 				</Form.Group>
 
 				<Form.Group className='form-group' controlId="formTypes">
 					<Form.Label>Tipo</Form.Label>
-					<Form.Control required as="select" onChange={this.props.onTypeChange} >
-						{this.props.types.map((t, i) => {
+					<Form.Control required as="select" value={this.props.typeSelected} onChange={this.props.onTypeChange} >
+						{this.props.types && this.props.types.map((t, i) => {
 							if (i===0) return (<option key={`type-${i}`} value='' disabled selected hidden >{t}</option>)
 							return (<option key={`type-${i}`} value={i}>{t}</option>)
 						})}
@@ -73,7 +81,7 @@ class LenderForm extends PureComponent {
 				<Form.Group className='form-group' controlId="formPlan">
 					<Form.Label>Plan de cobertura inicial</Form.Label>
 					<Form.Control required as="select" value={this.props.planSelected} onChange={this.props.onPlanChange} >
-						{ this.props.plans.map((p, i) => {
+						{ this.props.plans && this.props.plans.map((p, i) => {
 							if (i===0) return (<option key={`plan-${i}`} value='' disabled selected hidden >{p}</option>)
 							return (<option key={`plan-${i}`} value={i}>{p}</option>)
 						})}
@@ -86,9 +94,9 @@ class LenderForm extends PureComponent {
 					<div className='add-lender-languages'>
 						<Select
 							required
-							defaultValue={[]}
 							isMulti
 							name="colors"
+							value={languagesValues}
 							onChange={this.props.onLanguagesChange}
 							options={this.props.languages}
 							className="basic-multi-select"
@@ -114,6 +122,7 @@ class LenderForm extends PureComponent {
 							<Form.Control
 								required={i===0}
 								onChange={ev => { this.props.onEmailsChange(ev, i) }}
+								value={this.props.emailsSelected[i]}
 								type="email"
 								placeholder={`${translations.SPANISH.enter} un email`}/>
 							<Form.Control.Feedback className='error-message' type="invalid">Email inválido</Form.Control.Feedback>
@@ -129,78 +138,85 @@ class LenderForm extends PureComponent {
 							<h5 className='add-email-text'>Agregar dirección</h5>
 						</div>
 					</div>
-					{ this.props.addressesSelected.map((address, i) => (
-						<div className='address' key={`address-${i}`}>
-							{ (i > 0) &&
-							<hr className='hr-addr'/>
-							}
-							<div className='form-address multiple-fields'>
-								<div className='form-address-left'>
-									<Form.Control
-										required={ i === 0 }
-										type="string"
-										onChange={ev => { this.props.onAddressChange(ev.target.value, i) }}
-										placeholder={`${translations.SPANISH.enter} dirección`} />
-									<Form.Control.Feedback className='error-message' type="invalid">Dirección inválida</Form.Control.Feedback>
+					{ this.props.addressesSelected &&
+						this.props.addressesSelected.map((address, i) => (
+							<div className='address' key={`address-${i}`}>
+								{ (i > 0) &&
+									<hr className='hr-addr'/>
+								}
+								<div className='form-address multiple-fields'>
+									<div className='form-address-left'>
+										<Form.Control
+											required={ i === 0 }
+											type="string"
+											value={this.props.addressesSelected[i].address}
+											onChange={ev => { this.props.onAddressChange(ev.target.value, i) }}
+											placeholder={`${translations.SPANISH.enter} dirección`} />
+										<Form.Control.Feedback className='error-message' type="invalid">Dirección inválida</Form.Control.Feedback>
+									</div>
+									<div className='form-address-right'>
+										<Form.Control
+											type="string"
+											value={this.props.addressesSelected[i].phone}
+											onChange={ev => { this.props.onPhoneChange(ev.target.value, i) }}
+											placeholder={`${translations.SPANISH.enter} teléfono`} />
+									</div>
 								</div>
-								<div className='form-address-right'>
-									<Form.Control
-										type="string"
-										onChange={ev => { this.props.onPhoneChange(ev.target.value, i) }}
-										placeholder={`${translations.SPANISH.enter} teléfono`} />
+								<div className='form-address multiple-fields'>
+									<div className='form-address-lat-left'>
+										<Form.Control
+											required={ i === 0 }
+											as="select"
+											value={this.props.addressesSelected[i].zone}
+											onChange={ev => { this.props.onZoneChange(ev.target.value, i)}} >
+											{this.props.zones && this.props.zones.map((p, i) => {
+												if (i===0) return (<option key={`zones-${i}`} value={p.id} disabled selected hidden>{p.name}</option>)
+												return (<option key={`zones-${i}`} value={p.id}>{p.name}</option>)
+											})}
+										</Form.Control>
+										<Form.Control.Feedback className='error-message' type="invalid">Localidad inválida</Form.Control.Feedback>
+									</div>
+									<div className='form-address-lat-middle'>
+										<Form.Control
+											required={ i === 0 }
+											type="number"
+											step='.000001'
+											value={this.props.addressesSelected[i].latitude}
+											onChange={ev => { this.props.onLatitudeChange(ev.target.value, i) }}
+											placeholder={`${translations.SPANISH.enter} latitud`} />
+										<Form.Control.Feedback className='error-message' type="invalid">Latitud inválida</Form.Control.Feedback>
+									</div>
+									<div className='form-address-lat-right'>
+										<Form.Control
+											required={ i === 0 }
+											type="number"
+											step='.000001'
+											value={this.props.addressesSelected[i].longitude}
+											onChange={ev => { this.props.onLongitudeChange(ev.target.value, i)}}
+											placeholder={`${translations.SPANISH.enter} longitud`} />
+										<Form.Control.Feedback className='error-message' type="invalid">Longitud inválida</Form.Control.Feedback>
+									</div>
 								</div>
-							</div>
-							<div className='form-address multiple-fields'>
-								<div className='form-address-lat-left'>
-									<Form.Control
-										required={ i === 0 }
-										as="select"
-										onChange={ev => { this.props.onZoneChange(ev.target.value, i)}} >
-										{this.props.zones.map((p, i) => {
-											if (i===0) return (<option key={`zones-${i}`} value={p.id} disabled selected hidden>{p.name}</option>)
-											return (<option key={`zones-${i}`} value={p.id}>{p.name}</option>)
-										})}
-									</Form.Control>
-									<Form.Control.Feedback className='error-message' type="invalid">Localidad inválida</Form.Control.Feedback>
-								</div>
-								<div className='form-address-lat-middle'>
-									<Form.Control
-										required={ i === 0 }
-										type="number"
-										step='.000001'
-										onChange={ev => { this.props.onLatitudeChange(ev.target.value, i) }}
-										placeholder={`${translations.SPANISH.enter} latitud`} />
-									<Form.Control.Feedback className='error-message' type="invalid">Latitud inválida</Form.Control.Feedback>
-								</div>
-								<div className='form-address-lat-right'>
-									<Form.Control
-										required={ i === 0 }
-										type="number"
-										step='.000001'
-										onChange={ev => { this.props.onLongitudeChange(ev.target.value, i)}}
-										placeholder={`${translations.SPANISH.enter} longitud`} />
-									<Form.Control.Feedback className='error-message' type="invalid">Longitud inválida</Form.Control.Feedback>
-								</div>
-							</div>
 							{address.latitude && address.longitude &&
-							<div className="mapouter">
-								<div className="gmap_canvas">
-									<iframe
-										width={this.props.mapWidth}
-										height={this.props.mapHeight}
-										id="gmap_canvas"
-										title='gmap'
-										src={`https://maps.google.com/maps?q=${address.latitude},${address.longitude}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
-										frameBorder="0"
-										scrolling="no"
-										marginHeight="0"
-										marginWidth="0">
-									</iframe>
+								<div className="mapouter">
+									<div className="gmap_canvas">
+										<iframe
+											width={this.props.mapWidth}
+											height={this.props.mapHeight}
+											id="gmap_canvas"
+											title='gmap'
+											src={`https://maps.google.com/maps?q=${address.latitude},${address.longitude}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+											frameBorder="0"
+											scrolling="no"
+											marginHeight="0"
+											marginWidth="0">
+										</iframe>
+									</div>
 								</div>
-							</div>
 							}
 						</div>
-					))}
+					))
+				}
 				</Form.Group>
 
 				<div className='form-login-submit' >

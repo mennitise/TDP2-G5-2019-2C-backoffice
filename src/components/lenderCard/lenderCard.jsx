@@ -50,7 +50,7 @@ class LenderCard extends PureComponent {
 						</div>
 						<div className='card-buttons'>
 							<div className='card-buttons-size'>
-								<Button className='modify-button-card' variant="primary">Modificar</Button>
+								<Button className='modify-button-card' variant="primary" onClick={() => {this.props.modifyHandler(this.props.id)} } >Modificar</Button>
 								<Button className='button-card' variant="secondary" onClick={() => {this.props.deleteHandler(this.props.id)} } >Borrar</Button>
 							</div>
 						</div>

@@ -18,6 +18,7 @@ const authorization_details_selector = createSelector(
 				plan: authorizationSelected.affiliate.plan,
 				status: authorizationSelected.status,
 				imgUrl: authorizationSelected.url,
+				observations: authorizationSelected.observations ? authorizationSelected.observations : '-',
 			}
 		}
 
