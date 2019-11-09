@@ -21,46 +21,17 @@ class ModifyLender extends PureComponent {
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-
 		if (!this.state.loaded) {
-
-			let specialitiesSelected = null
-			let languageSelected = null
-			let typeSelected = null
-
-			if (!this.state.specialties && this.props.selected && this.props.selected.specialties && this.props.specialities) {
-				specialitiesSelected = this.props.specialities
-					.filter(sp => this.props.selected.specialties.includes(sp.label))
-					.map(sp => sp.value)
-			}
-
-			if (!this.state.languages && this.props.selected && this.props.selected.languages && this.props.languages) {
-				languageSelected = this.props.languages
-					.filter(l => this.props.selected.languages.includes(l.label))
-					.map(l => l.value)
-			}
-
-			if (!this.state.type && this.props.selected && this.props.selected.type) {
-				typeSelected = (this.props.selected.type === 'PROFESIONAL') ? '1' : '2'
-			}
-
-			const plans = ['Selecciona un plan', 'A110', 'A210', 'A310']
-			const planSelected = plans.indexOf(this.props.selected.plan)
-
 			if (!this.state.name && this.props.selected.name) {
 				this.setState({
 					...this.state,
 					name: this.props.selected.name,
-					specialities: specialitiesSelected,
-					type: typeSelected,
-					plan: planSelected,
-					languages: languageSelected,
+					specialities: this.props.selected.specialities,
+					type: this.props.selected.type,
+					plan: this.props.selected.plan,
+					languages: this.props.selected.languages,
 					emails: this.props.selected.emails,
-					addresses: this.props.selected.offices.map(address => ({
-						...address,
-						latitude: address.lat,
-						longitude: address.lon,
-					})),
+					addresses: this.props.selected.offices,
 				})
 			}
 		}
