@@ -6,12 +6,17 @@ const sidebarActions = {
 			type: actionTypes.SIDEBAR_DASHBOARD_SELECTED,
 		}
 	},
-    lendersSelected: function() {
+	usersSelected: function() {
+		return {
+			type: actionTypes.SIDEBAR_USERS_SELECTED,
+		}
+	},
+	lendersSelected: function() {
 		return {
 			type: actionTypes.SIDEBAR_LENDERS_SELECTED,
 		}
 	},
-    autorizationsSelected: function() {
+	autorizationsSelected: function() {
 		return {
 			type: actionTypes.SIDEBAR_AUTHORIZATIONS_SELECTED,
 		}

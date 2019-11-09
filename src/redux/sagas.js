@@ -240,11 +240,16 @@ function* goToModifyLender(action) {
 	yield browserHistory.push(`/main/lenders/modify/${action.id}`)
 }
 
+function* goToUsers() {
+	yield browserHistory.push('/main/users')
+}
+
 export default function* rootSaga() {
     yield all([
 		// Redirections
 		yield takeEvery(actionTypes.LENDER_ADD_NEW_LENDER_SELECTED, redirectToAddNewLender),
         yield takeEvery(actionTypes.SIDEBAR_DASHBOARD_SELECTED, goToDashboard),
+		yield takeEvery(actionTypes.SIDEBAR_USERS_SELECTED, goToUsers),
 		yield takeEvery([actionTypes.SIDEBAR_LENDERS_SELECTED, actionTypes.LENDER_SAVE_NEW_LENDER_SUCCESSFUL], goToLenders),
 		yield takeEvery([
 			actionTypes.SIDEBAR_AUTHORIZATIONS_SELECTED,

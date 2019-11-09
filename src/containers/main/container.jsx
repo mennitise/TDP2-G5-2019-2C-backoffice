@@ -3,7 +3,7 @@ import { Route, Redirect, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import bindActionsToDispatch from 'helpers/bindActionsToDispatch'
 
-import RegisterContainer from "containers/register/container"
+import UsersContainer from "containers/users/container"
 import LendersContainer from "containers/lenders/container"
 import AddLenderContainer from "containers/addLender/container"
 import ModifyLenderContainer from 'containers/modifyLender/container'
@@ -14,6 +14,7 @@ import sidebarActions from "redux/actions/sidebarActions"
 
 import logo from "assets/images/login_logo.png"
 import dashLogo from 'assets/images/dash.svg'
+import usersLogo from 'assets/images/users.svg'
 import docLogo from 'assets/images/doctor.svg'
 import authLogo from 'assets/images/authorizations.svg'
 
@@ -31,6 +32,10 @@ class MainContainer extends PureComponent {
 		return this.props.actions.autorizationsSelected()
 	}
 
+	usersHandler = () => {
+		return this.props.actions.usersSelected()
+	}
+
 	render() {
 		return (
 			<div className='wrapper'>
@@ -43,6 +48,12 @@ class MainContainer extends PureComponent {
 							<div className='sidebar-logo-list'>
 								<img src={dashLogo} className='sidebar-logo-option' alt="logo" />
 								<label className='sidebar-logo-label'>Dashboard</label>
+							</div>
+						</li>
+						<li onClick={this.usersHandler}>
+							<div className='sidebar-logo-list'>
+								<img src={usersLogo} className='sidebar-logo-option' alt="logo" />
+								<label className='sidebar-logo-label'>Usuarios</label>
 							</div>
 						</li>
 						<li onClick={this.lendersHandler}>
@@ -61,7 +72,7 @@ class MainContainer extends PureComponent {
 				</div>
 				<div className='content'>
 					<Switch>
-						<Route path={`${this.props.match.path}/register`} component={RegisterContainer}/>
+						<Route path={`${this.props.match.path}/users`} component={UsersContainer}/>
 						<Route path={`${this.props.match.path}/lenders/modify/:id`} component={ModifyLenderContainer}/>
 						<Route path={`${this.props.match.path}/lenders/add`} component={AddLenderContainer}/>
 						<Route path={`${this.props.match.path}/lenders`} component={LendersContainer}/>
@@ -79,6 +90,7 @@ class MainContainer extends PureComponent {
 function mapDispatchToProps(dispatch) {
 	return bindActionsToDispatch({
 		dashboardSelected: sidebarActions.dashboardSelected,
+		usersSelected: sidebarActions.usersSelected,
 		lendersSelected: sidebarActions.lendersSelected,
 		autorizationsSelected: sidebarActions.autorizationsSelected,
 	}, dispatch)
