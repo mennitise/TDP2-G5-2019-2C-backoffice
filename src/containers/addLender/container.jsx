@@ -5,9 +5,15 @@ import bindActionsToDispatch from 'helpers/bindActionsToDispatch'
 import lenderActions from 'redux/actions/lenderActions'
 import { lendersSelectors } from 'redux/selectors'
 import AddLender from 'views/addLender/addLender'
+import generalActions from "../../redux/actions/generalActions"
 
 
 class AddLendersContainer extends PureComponent {
+	componentDidMount() {
+		this.props.actions.initializeRoute()
+		window.scrollTo(0, 0)
+	}
+
 	render() {
 		return(
 			<AddLender
@@ -31,6 +37,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return bindActionsToDispatch({
 		saveNewLenderSelected: lenderActions.saveNewLenderSelected,
+		initializeRoute: generalActions.addLendersInitializeRoute,
 	}, dispatch)
 }
 

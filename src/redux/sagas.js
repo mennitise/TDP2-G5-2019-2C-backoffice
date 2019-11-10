@@ -1,11 +1,12 @@
 import actionTypes from './actions/actionTypes'
-import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects'
+import { all, call, put, takeEvery, takeLatest, select } from 'redux-saga/effects'
 import browserHistory from 'helpers/history'
 import loginActions from "./actions/loginActions"
 import zonesActions from './actions/zonesActions'
 import lenderActions from "./actions/lenderActions"
 import specialitiesActions from "./actions/specialitiesActions"
 import authorizationsActions from "./actions/authorizationsActions"
+import userRoles from "helpers/enums/userRoles"
 
 const baseURL = 'https://tdp2-crmedical-api.herokuapp.com/'
 
@@ -31,6 +32,7 @@ export function* login(action) {
 		const responseJson = yield response.json()
 */
 		yield put(loginActions.loginSuccess(action.username))
+		//yield put(loginActions.loginFailed())
 	} catch(error) {
 		console.log(error)
 	}
@@ -262,9 +264,32 @@ function* goToUsers() {
 	yield browserHistory.push('/main/users')
 }
 
-function* manageLogin(state, action) {
-	console.log(state)
-	console.log(action)
+function* manageLogin(action) {
+	const getUserRol = (state) => state.user.rol
+	const rol = yield select(getUserRol);
+
+	switch (rol) {
+		case userRoles.AUDITOR:
+			if (
+				action.type === actionTypes.LENDERS_ROUTE_INITIALIZE ||
+				action.type === actionTypes.LENDER_ADD_LENDER_INITIALIZE ||
+				action.type === actionTypes.LENDERS_MODIFY_LENDER_ROUTE_INITIALIZE
+			) {
+				goToAuthorizations()
+			}
+			break
+		case userRoles.ADMIN:
+			if (
+				action.type === actionTypes.AUTHORIZATIONS_ROUTE_INITIALIZE ||
+				action.type === actionTypes.AUTHORIZATIONS_AUTHORIZATION_DETAILS_ROUTE_INITIALIZE
+			) {
+				goToLenders()
+			}
+			break
+		default:
+			browserHistory.push('login')
+	}
+
 }
 
 export default function* rootSaga() {
@@ -285,8 +310,11 @@ export default function* rootSaga() {
         yield takeLatest(actionTypes.LOGIN_SUCCESS, loginSuccesed),
         yield takeEvery([
         	actionTypes.LENDERS_ROUTE_INITIALIZE,
+        	actionTypes.LENDER_ADD_LENDER_INITIALIZE,
         	actionTypes.LENDERS_MODIFY_LENDER_ROUTE_INITIALIZE,
 			actionTypes.AUTHORIZATIONS_ROUTE_INITIALIZE,
+			actionTypes.AUTHORIZATIONS_AUTHORIZATION_DETAILS_ROUTE_INITIALIZE,
+			actionTypes.DASHBOARD_ROUTE_INITIALIZE,
 		], manageLogin),
 
         // Sync

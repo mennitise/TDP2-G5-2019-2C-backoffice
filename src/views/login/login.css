@@ -16,6 +16,11 @@
     flex-shrink: 1;
 }
 
+.login-invalid {
+    color: #BB1408;
+    font-size: 17px;
+}
+
 .form-login-submit {
     width: 100%;
     padding: 5%;

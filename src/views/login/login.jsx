@@ -3,7 +3,6 @@ import Form from 'react-bootstrap/Form'
 
 import translations from 'helpers/enums/translations'
 import { Button } from 'react-bootstrap'
-import browserHistory from 'helpers/history'
 
 import logo from 'assets/images/login_logo.png'
 import './login.css'
@@ -58,6 +57,9 @@ class Login extends PureComponent {
 							onChange={this.onPassChange}
 							placeholder={`${translations.SPANISH.enter} ${translations.SPANISH.password}`} />
 					</Form.Group>
+					{ this.props.validated &&
+						<h3 className='login-invalid' >El usuario y/o la contraseña son incorrectos</h3>
+					}
 					<div className='form-login-submit' >
 						<Button variant="primary" type="submit">
 							{translations.SPANISH.signin}

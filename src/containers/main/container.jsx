@@ -9,6 +9,7 @@ import AddLenderContainer from "containers/addLender/container"
 import ModifyLenderContainer from 'containers/modifyLender/container'
 import AuthorizationsContainer from 'containers/authorizations/container'
 import AuthorizationDetailedContainer from 'containers/authDetailed/container'
+import DashboardContainer from 'containers/dashboard/container'
 
 import sidebarActions from "redux/actions/sidebarActions"
 import { userSelectors } from 'redux/selectors'
@@ -77,7 +78,7 @@ class MainContainer extends PureComponent {
 						<Route path={`${this.props.match.path}/lenders`} component={LendersContainer}/>
 						<Route path={`${this.props.match.path}/authorization/:id`} component={AuthorizationDetailedContainer}/>
 						<Route path={`${this.props.match.path}/authorizations`} component={AuthorizationsContainer}/>
-						<Route path={`${this.props.match.path}/dash`} component={null} />
+						<Route path={`${this.props.match.path}/dash`} component={DashboardContainer} />
 						<Redirect to="/login" />
 					</Switch>
 				</div>

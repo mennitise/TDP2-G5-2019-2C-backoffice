@@ -13,7 +13,12 @@ const loginActions = {
 			type: actionTypes.LOGIN_SUCCESS,
 			rol,
 		}
-	}
+	},
+	loginFailed: function() {
+		return {
+			type: actionTypes.LOGIN_FAILED,
+		}
+	},
 }
 
 export default loginActions

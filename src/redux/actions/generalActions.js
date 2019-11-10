@@ -20,6 +20,11 @@ const generalActions = {
             type: actionTypes.LENDERS_ROUTE_INITIALIZE,
         }
     },
+    addLendersInitializeRoute: function() {
+        return {
+            type: actionTypes.LENDER_ADD_LENDER_INITIALIZE,
+        }
+    },
     authorizationsRouteInitialize: function() {
         return {
             type: actionTypes.AUTHORIZATIONS_ROUTE_INITIALIZE,
@@ -36,7 +41,12 @@ const generalActions = {
             type: actionTypes.LENDERS_MODIFY_LENDER_ROUTE_INITIALIZE,
             id,
         }
-    }
+    },
+    dashboardRouteInitialize: function() {
+        return {
+            type: actionTypes.DASHBOARD_ROUTE_INITIALIZE,
+        }
+    },
 }
 
 export default generalActions

@@ -1,7 +1,8 @@
 import t from '../actions/actionTypes'
 
 let defaultState = {
-    rol: ''
+    rol: '',
+    validated: false,
 }
 
 function setUserData(state, action) {
@@ -11,10 +12,19 @@ function setUserData(state, action) {
     }
 }
 
+function setValidated(state) {
+    return {
+        ...state,
+        validated: true,
+    }
+}
+
 const userReducer = (state = defaultState, action) => {
     switch(action.type) {
         case t.LOGIN_SUCCESS:
           return setUserData(state, action)
+        case t.LOGIN_FAILED:
+            return setValidated(state)
         default:
             return state
     }
