@@ -1,9 +1,14 @@
 import { createSelector } from 'reselect'
+import userRoles from 'helpers/enums/userRoles'
 
 const getUser = (state) => state.user
-const user_name_selector = createSelector(
+const user_main_selector = createSelector(
   [ getUser ],
-  (user) => user.name
+  (user) => {
+  		return ({
+			rol: user.rol,
+  		})
+  }
 )
 
-export default user_name_selector
+export default user_main_selector

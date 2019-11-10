@@ -1,5 +1,5 @@
-import userNameSelector from './user_name_selector'
+import userMainSelector from './user_main_selector'
 
 export default {
-    userNameSelector,
+    userMainSelector,
 }

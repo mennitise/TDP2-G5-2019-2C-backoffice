@@ -18,7 +18,7 @@ class LoginContainer extends PureComponent {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionsToDispatch({
-		onLogin: loginActions.loginDataEntered,
+		onLogin: loginActions.loginButtonClicked,
 	}, dispatch)
 }
 

@@ -1,16 +1,17 @@
 import actionTypes from './actionTypes'
 
 const loginActions = {
-	loginDataEntered: function() {
+	loginButtonClicked: function(username, pass) {
 		return {
-			type: actionTypes.LOGIN_DATA_ENTERED,
+			type: actionTypes.LOGIN_BUTTON_CLICKED,
+			username,
+			pass,
 		}
 	},
-	loginSuccess: function(dni, name) {
+	loginSuccess: function(rol) {
 		return {
 			type: actionTypes.LOGIN_SUCCESS,
-			dni,
-			name,
+			rol,
 		}
 	}
 }

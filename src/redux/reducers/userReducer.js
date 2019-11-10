@@ -1,15 +1,13 @@
 import t from '../actions/actionTypes'
 
 let defaultState = {
-    dni: '',
-    name: '',
+    rol: ''
 }
 
 function setUserData(state, action) {
     return {
         ...state,
-        dni: action.dni,
-        name: action.name,
+        rol: action.rol,
     }
 }
 

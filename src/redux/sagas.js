@@ -13,10 +13,24 @@ const baseURL = 'https://tdp2-crmedical-api.herokuapp.com/'
 
 export function* login(action) {
 	try {
-		const endpoint = 'https://gist.githubusercontent.com/brunokrebs/f1cacbacd53be83940e1e85860b6c65b/raw/to-do-items.json'
-		const response = yield call(fetch, endpoint)
-        yield response.json()
-		yield put(loginActions.loginSuccess('36073333', 'Sebastian Menniti'))
+		// const endpoint = 'https://gist.githubusercontent.com/brunokrebs/f1cacbacd53be83940e1e85860b6c65b/raw/to-do-items.json'
+		// const response = yield call(fetch, endpoint)
+        // yield response.json()
+/*
+		const data = {
+			username: action.username,
+			pass: action.pass,
+		}
+		const response = yield fetch(baseURL + 'login', {
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		})
+		const responseJson = yield response.json()
+*/
+		yield put(loginActions.loginSuccess(action.username))
 	} catch(error) {
 		console.log(error)
 	}
@@ -216,6 +230,10 @@ function* needMoreInformationAuthorization(action) {
 
 // Redirections
 
+function* loginSuccesed() {
+	yield browserHistory.push('/main/dash')
+}
+
 function* redirectToAddNewLender(action) {
 	yield browserHistory.push('/main/lenders/add')
 }
@@ -244,6 +262,11 @@ function* goToUsers() {
 	yield browserHistory.push('/main/users')
 }
 
+function* manageLogin(state, action) {
+	console.log(state)
+	console.log(action)
+}
+
 export default function* rootSaga() {
     yield all([
 		// Redirections
@@ -259,9 +282,15 @@ export default function* rootSaga() {
 		], goToAuthorizations),
         yield takeEvery(actionTypes.AUTHORIZATIONS_AUTHORIZATION_SELECTED, goToAuthorizationDetails),
         yield takeLatest(actionTypes.LENDER_MODIFY_LENDER, goToModifyLender),
+        yield takeLatest(actionTypes.LOGIN_SUCCESS, loginSuccesed),
+        yield takeEvery([
+        	actionTypes.LENDERS_ROUTE_INITIALIZE,
+        	actionTypes.LENDERS_MODIFY_LENDER_ROUTE_INITIALIZE,
+			actionTypes.AUTHORIZATIONS_ROUTE_INITIALIZE,
+		], manageLogin),
 
         // Sync
-    	yield takeEvery(actionTypes.LOGIN_DATA_ENTERED, login),
+    	yield takeEvery(actionTypes.LOGIN_BUTTON_CLICKED, login),
 		yield takeLatest(actionTypes.APP_INITIALIZE, getSpecialities),
 		yield takeLatest(actionTypes.APP_INITIALIZE, getZones),
 		yield takeEvery([

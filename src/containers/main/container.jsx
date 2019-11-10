@@ -11,6 +11,8 @@ import AuthorizationsContainer from 'containers/authorizations/container'
 import AuthorizationDetailedContainer from 'containers/authDetailed/container'
 
 import sidebarActions from "redux/actions/sidebarActions"
+import { userSelectors } from 'redux/selectors'
+import userRoles from 'helpers/enums/userRoles'
 
 import logo from "assets/images/login_logo.png"
 import dashLogo from 'assets/images/dash.svg'
@@ -50,29 +52,26 @@ class MainContainer extends PureComponent {
 								<label className='sidebar-logo-label'>Dashboard</label>
 							</div>
 						</li>
-						<li onClick={this.usersHandler}>
-							<div className='sidebar-logo-list'>
-								<img src={usersLogo} className='sidebar-logo-option' alt="logo" />
-								<label className='sidebar-logo-label'>Usuarios</label>
-							</div>
-						</li>
-						<li onClick={this.lendersHandler}>
-							<div className='sidebar-logo-list'>
-								<img src={docLogo} className='sidebar-logo-option' alt="logo" />
-								<label className='sidebar-logo-label'>Prestadores</label>
-							</div>
-						</li>
-						<li onClick={this.ordersHandler}>
-							<div className='sidebar-logo-list'>
-								<img src={authLogo} className='sidebar-logo-option' alt="logo" />
-								<p className='sidebar-logo-label'>Autorizaciones</p>
-							</div>
-						</li>
+						{ this.props.rol === userRoles.ADMIN &&
+							<li onClick={this.lendersHandler}>
+								<div className='sidebar-logo-list'>
+									<img src={docLogo} className='sidebar-logo-option' alt="logo" />
+									<label className='sidebar-logo-label'>Prestadores</label>
+								</div>
+							</li>
+						}
+						{ this.props.rol === userRoles.AUDITOR &&
+							<li onClick={this.ordersHandler}>
+								<div className='sidebar-logo-list'>
+									<img src={authLogo} className='sidebar-logo-option' alt="logo"/>
+									<p className='sidebar-logo-label'>Autorizaciones</p>
+								</div>
+							</li>
+						}
 					</ul>
 				</div>
 				<div className='content'>
 					<Switch>
-						<Route path={`${this.props.match.path}/users`} component={UsersContainer}/>
 						<Route path={`${this.props.match.path}/lenders/modify/:id`} component={ModifyLenderContainer}/>
 						<Route path={`${this.props.match.path}/lenders/add`} component={AddLenderContainer}/>
 						<Route path={`${this.props.match.path}/lenders`} component={LendersContainer}/>
@@ -87,6 +86,10 @@ class MainContainer extends PureComponent {
 	}
 }
 
+function mapStateToProps(state) {
+	return userSelectors.userMainSelector(state)
+}
+
 function mapDispatchToProps(dispatch) {
 	return bindActionsToDispatch({
 		dashboardSelected: sidebarActions.dashboardSelected,
@@ -96,4 +99,4 @@ function mapDispatchToProps(dispatch) {
 	}, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(MainContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(MainContainer)
