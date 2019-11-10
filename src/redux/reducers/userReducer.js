@@ -2,13 +2,16 @@ import t from '../actions/actionTypes'
 
 let defaultState = {
     rol: '',
+    email: '',
     validated: false,
 }
 
 function setUserData(state, action) {
     return {
         ...state,
-        rol: action.rol,
+        rol: action.user.role,
+        email: action.user.email,
+        validated: true,
     }
 }
 

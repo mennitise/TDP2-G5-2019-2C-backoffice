@@ -25,24 +25,22 @@ const hardcodedLogin = (username, pass) => {
 
 export function* login(action) {
 	try {
-		/*
 		const data = {
-			username: action.username,
-			pass: action.pass,
+			email: action.username,
+			password: action.pass,
 		}
-		const response = yield fetch(baseURL + 'login', {
+		const response = yield fetch(baseURL + 'auth/bo/login', {
 			method: 'POST',
 			body: JSON.stringify(data),
 			headers: {
-				"Content-type": "application/json; charset=UTF-8"
+				"Content-type": "application/json; charset=UTF-8",
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers' : 'Origin, Content-Type,  X-Requested-With, Accept'
 			}
 		})
-		const responseJson = yield response.json()
-		*/
-
-		// TODO: Change this logic with the API logic
-		if (hardcodedLogin(action.username, action.pass)) {
-			yield put(loginActions.loginSuccess(action.username))
+		const responseJSON = yield response.json()
+		if (response.status === 200) {
+			yield put(loginActions.loginSuccess(responseJSON.user))
 		} else {
 			yield put(loginActions.loginFailed())
 		}

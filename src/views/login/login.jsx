@@ -38,7 +38,6 @@ class Login extends PureComponent {
 	}
 
 	render() {
-		console.log(this.state)
 		return(
 			<div className='login'>
 				<img src={logo} className='login-logo' alt="logo" />				

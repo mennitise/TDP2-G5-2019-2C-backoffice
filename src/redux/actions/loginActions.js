@@ -8,10 +8,10 @@ const loginActions = {
 			pass,
 		}
 	},
-	loginSuccess: function(rol) {
+	loginSuccess: function(user) {
 		return {
 			type: actionTypes.LOGIN_SUCCESS,
-			rol,
+			user,
 		}
 	},
 	loginFailed: function() {
