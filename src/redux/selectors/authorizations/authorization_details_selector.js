@@ -19,6 +19,9 @@ const authorization_details_selector = createSelector(
 				status: authorizationSelected.status,
 				imgUrl: authorizationSelected.url,
 				observations: authorizationSelected.observations ? authorizationSelected.observations : '-',
+				authType: 'Radiografia',
+				// TODO: Change this mocked data with the response of the API
+				// authType: authorizationSelected.authtype,
 			}
 		}
 

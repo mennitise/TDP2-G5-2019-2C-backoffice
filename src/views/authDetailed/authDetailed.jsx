@@ -72,6 +72,12 @@ class AuthDetailed extends PureComponent {
 								<p className='items-field'>{this.props.authorization.speciality}</p>
 							</div>
 						}
+						{this.props.authorization.authType &&
+							<div className='auth-field'>
+								<p className='items-title'>Tipo de Estudio:</p>
+								<p className='items-field'>{this.props.authorization.authType}</p>
+							</div>
+						}
 						{this.props.authorization.plan &&
 							<div className='auth-field'>
 								<p className='items-title'>Plan de cobertura inicial:</p>

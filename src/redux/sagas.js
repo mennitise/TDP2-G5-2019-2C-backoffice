@@ -12,12 +12,20 @@ const baseURL = 'https://tdp2-crmedical-api.herokuapp.com/'
 
 // API calls
 
+const hardcodedLogin = (username, pass) => {
+	switch (username) {
+		case userRoles.ADMIN:
+			return pass === '123456'
+		case userRoles.AUDITOR:
+			return pass === 'asdf1234'
+		default:
+			return false
+	}
+}
+
 export function* login(action) {
 	try {
-		// const endpoint = 'https://gist.githubusercontent.com/brunokrebs/f1cacbacd53be83940e1e85860b6c65b/raw/to-do-items.json'
-		// const response = yield call(fetch, endpoint)
-        // yield response.json()
-/*
+		/*
 		const data = {
 			username: action.username,
 			pass: action.pass,
@@ -30,10 +38,16 @@ export function* login(action) {
 			}
 		})
 		const responseJson = yield response.json()
-*/
-		yield put(loginActions.loginSuccess(action.username))
-		//yield put(loginActions.loginFailed())
+		*/
+
+		// TODO: Change this logic with the API logic
+		if (hardcodedLogin(action.username, action.pass)) {
+			yield put(loginActions.loginSuccess(action.username))
+		} else {
+			yield put(loginActions.loginFailed())
+		}
 	} catch(error) {
+		yield put(loginActions.loginFailed())
 		console.log(error)
 	}
 }
@@ -287,7 +301,7 @@ function* manageLogin(action) {
 			}
 			break
 		default:
-			browserHistory.push('login')
+			browserHistory.push('/login')
 	}
 
 }
