@@ -341,6 +341,7 @@ export default function* rootSaga() {
 		yield takeEvery([
 			actionTypes.AUTHORIZATIONS_ROUTE_INITIALIZE,
 			actionTypes.AUTHORIZATIONS_AUTHORIZATION_DETAILS_ROUTE_INITIALIZE,
+			actionTypes.SIDEBAR_AUTHORIZATIONS_SELECTED,
 		], getAuthorizations),
 		yield takeEvery(actionTypes.LENDER_SAVE_NEW_LENDER_SELECTED, saveNewLender),
 		yield takeEvery(actionTypes.LENDER_MODIFY_LENDER_SAVE, modifyLender),
