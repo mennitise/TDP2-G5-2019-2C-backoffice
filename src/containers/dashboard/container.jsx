@@ -2,7 +2,9 @@ import React, {PureComponent} from 'react'
 import { connect } from 'react-redux'
 import bindActionsToDispatch from 'helpers/bindActionsToDispatch'
 
-import generalActions from 'redux/actions/generalActions'
+import Dashboard from 'views/dashboard/dashboard'
+import generalActions from "redux/actions/generalActions"
+import { dashboardSelectors } from 'redux/selectors'
 
 
 class DashboardContainer extends PureComponent {
@@ -12,11 +14,18 @@ class DashboardContainer extends PureComponent {
 
 	render() {
 		return(
-			<div className='wrapper-lenders list list-wrapper'>
-				<h2 className='top-title add-lender-left'>Dashboard</h2>
-			</div>
+			<Dashboard
+				width={this.props.width}
+				height={this.props.height}
+				authorizations={this.props.authData}
+				affiliates={this.props.affiliatesData}
+			/>
 		)
 	}
+}
+
+function mapStateToProps(state) {
+	return dashboardSelectors.dashboardDataSelector(state)
 }
 
 function mapDispatchToProps(dispatch) {
@@ -25,4 +34,4 @@ function mapDispatchToProps(dispatch) {
 	}, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(DashboardContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer)

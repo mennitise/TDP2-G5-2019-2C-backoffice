@@ -7,6 +7,7 @@ import lenderActions from "./actions/lenderActions"
 import specialitiesActions from "./actions/specialitiesActions"
 import authorizationsActions from "./actions/authorizationsActions"
 import userRoles from "helpers/enums/userRoles"
+import metricsActions from "./actions/metricsActions"
 
 const baseURL = 'https://tdp2-crmedical-api.herokuapp.com/'
 
@@ -242,6 +243,98 @@ function* needMoreInformationAuthorization(action) {
 	}
 }
 
+function* getAuthorizationsMetrics() {
+	try {
+		const endpointAuthorized = baseURL + 'dashboards/auth/authorized'
+		const endpointRejected = baseURL + 'dashboards/auth/rejected'
+		const endpointSummary = baseURL + 'dashboards/auth/summary'
+
+		const responseAuthorized = yield call(fetch, endpointAuthorized)
+		const responseRejected = yield call(fetch, endpointRejected)
+		const responseSummary = yield call(fetch, endpointSummary)
+
+		const dataAuthorized = yield responseAuthorized.json()
+		const dataRejected = yield responseRejected.json()
+		const dataSummary = yield responseSummary.json()
+
+		let totalData = {}
+
+		dataAuthorized.map(auth => {
+			const key = auth.okdate.substring(0, 10)
+			totalData = {
+				...totalData,
+				[key]: {
+					authorized: auth.count,
+				},
+			}
+		})
+
+		dataRejected.map(auth => {
+			const key = auth.okdate.substring(0, 10)
+			totalData = {
+				...totalData,
+				[key]: {
+					...totalData[key],
+					rejected: auth.count,
+				},
+			}
+		})
+
+		const dates = Object.keys(totalData)
+		const approvedByDate = dates.map(date => {
+			return totalData[date].authorized || 0
+		})
+		const rejectedByDate = dates.map(date => {
+			return totalData[date].rejected || 0
+		})
+
+		const automaticAmount = parseInt(dataSummary.filter(data => data.status === 'AUTORIZADO AUTOMATICAMENTE')[0].count)
+		const manualAmount = parseInt(dataSummary.filter(data => data.status === 'AUTORIZADO')[0].count)
+
+		const data = {
+			dates,
+			approvedByDate,
+			rejectedByDate,
+			manualAmount,
+			automaticAmount,
+		}
+
+		yield put(metricsActions.getAuthorizationsSuccess(data))
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+function* getAffiliatesMetrics() {
+	try {
+		const endpointActive = baseURL + 'dashboards/affiliates/active'
+		const endpointAll = baseURL + 'dashboards/affiliates/all'
+		const responseActive = yield call(fetch, endpointActive)
+		const responseAll = yield call(fetch, endpointAll)
+		const dataActive = yield responseActive.json()
+		const dataAll = yield responseAll.json()
+
+		const plans = dataAll.map(amount => amount.plan)
+		const values = dataAll.map(amount => parseInt(amount.count))
+		const appValues = dataActive.map(amount => parseInt(amount.count))
+
+		const data = {
+			plans,
+			values,
+			appValues,
+		}
+
+		yield put(metricsActions.getAffiliatesSuccess(data))
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+function* getMetrics(action) {
+	yield getAuthorizationsMetrics()
+	yield getAffiliatesMetrics()
+}
+
 // Redirections
 
 function* loginSuccesed() {
@@ -349,5 +442,6 @@ export default function* rootSaga() {
 		yield takeLatest(actionTypes.AUTHORIZATIONS_AUTHORIZATION_AUTHORIZED, authorizeAuthorization),
 		yield takeLatest(actionTypes.AUTHORIZATIONS_AUTHORIZATION_REJECTED, rejectAuthorization),
 		yield takeLatest(actionTypes.AUTHORIZATIONS_AUTHORIZATION_NEED_MORE_INFORMATION, needMoreInformationAuthorization),
+		yield takeLatest(actionTypes.DASHBOARD_ROUTE_INITIALIZE, getMetrics),
 	])
 }
