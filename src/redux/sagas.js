@@ -259,7 +259,35 @@ function* getAuthorizationsMetrics() {
 
 		let totalData = {}
 
-		dataAuthorized.map(auth => {
+		Date.prototype.addDays = function(days) {
+			let dat = new Date(this.valueOf())
+			dat.setDate(dat.getDate() + days);
+			return dat;
+		}
+
+		Date.prototype.deductDays = function(days) {
+			let dat = new Date(this.valueOf())
+			dat.setDate(dat.getDate() - days)
+			return dat;
+		}
+
+		const getDates = (startDate, stopDate) => {
+			let dateArray = []
+			let currentDate = startDate
+			while (currentDate <= stopDate) {
+				dateArray.push( new Date (currentDate) )
+				currentDate = currentDate.addDays(1)
+			}
+			return dateArray;
+		}
+
+		const dateArray = getDates((new Date()).deductDays(30), new Date())
+		dateArray.forEach(date => {
+			const dateString = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+			totalData[dateString] = {}
+		})
+
+		dataAuthorized.forEach(auth => {
 			const key = auth.okdate.substring(0, 10)
 			totalData = {
 				...totalData,
@@ -269,7 +297,7 @@ function* getAuthorizationsMetrics() {
 			}
 		})
 
-		dataRejected.map(auth => {
+		dataRejected.forEach(auth => {
 			const key = auth.okdate.substring(0, 10)
 			totalData = {
 				...totalData,
@@ -281,6 +309,7 @@ function* getAuthorizationsMetrics() {
 		})
 
 		const dates = Object.keys(totalData)
+
 		const approvedByDate = dates.map(date => {
 			return totalData[date].authorized || 0
 		})
